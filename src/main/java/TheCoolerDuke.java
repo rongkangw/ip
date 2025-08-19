@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TheCoolerDuke {
@@ -16,6 +17,38 @@ public class TheCoolerDuke {
         System.out.println("Bot >>>\n" + msg);
     }
 
+    //checks modifier is of correct format based on provided acceptedModifiers
+    //returns the separated String[] version of the modifier if valid
+    private static String[] validateAndFormatModifier(String modifier, String[] acceptedModifiers) throws InvalidFormatException {
+
+        //check that modifier contains the accepted modifiers provided
+        String missing = "";
+        for (String accepted: acceptedModifiers) {
+            if (!modifier.contains(accepted)) {
+                missing += " " + accepted;
+            }
+        }
+
+        //throw if any missing modifiers
+        if (!missing.isEmpty()) {
+            throw new InvalidFormatException(String.format("missing the modifier(s):%s!", missing));
+        }
+
+        //format the modifier into its parameters based on the accepted modifiers
+        String regex = String.join("|", acceptedModifiers);
+        String[] params = modifier.split(regex, acceptedModifiers.length + 1);
+
+        //ensure that none of the parameters are empty, otherwise trim leading and trailing whitespaces as well
+        for (int i = 0; i< params.length; i++) {
+            if (params[i].isEmpty()) {
+                throw new InvalidFormatException("one of the parameters is missing!");
+            } else {
+                params[i] = params[i].trim();
+            }
+        }
+        return params;
+    }
+
     public static void storeFeature(Scanner scanner) {
         TaskManager textList = new TaskManager();
         String outputMessage;
@@ -32,50 +65,62 @@ public class TheCoolerDuke {
                 break;
 
             case "todo" :
-                outputMessage = textList.addTodoTask(modifier.trim());
+                try {
+                    result = validateAndFormatModifier(modifier, new String[]{});
+                    outputMessage = textList.addTodoTask(result[0]);
+
+                } catch (InvalidFormatException e) {
+                    outputMessage = e.getMessage();
+                }
                 break;
 
             case "deadline" :
-                if (modifier.contains("/by")) {
-                    String[] params = modifier.split("/by");
-                    outputMessage = textList.addDeadlineTask(params[0].trim(), params[1].trim());
-                } else {
-                    outputMessage = "Dude, your deadline command has the wrong format!";
+                try {
+                    result = validateAndFormatModifier(modifier, new String[]{"/by"});
+                    outputMessage = textList.addDeadlineTask(result[0], result[1]);
+
+                } catch (InvalidFormatException e) {
+                    outputMessage = e.getMessage();
                 }
                 break;
 
             case "event" :
-                if (modifier.contains("/from") && modifier.contains("/to")) {
-                    String[] params = modifier.split("/from|/to");
-                    outputMessage = textList.addEventTask(params[0].trim(), params[1].trim(), params[2].trim());
-                } else {
-                    outputMessage = "Dude, your event command has the wrong format!";
+                try {
+                    result = validateAndFormatModifier(modifier, new String[]{"/from", "/to"});
+                    outputMessage = textList.addEventTask(result[0], result[1], result[2] );
+
+                } catch (InvalidFormatException e) {
+                    outputMessage = e.getMessage();
                 }
                 break;
 
             case "mark" :
-                //check if mark format is valid
                 try {
-                    int chosenIdx = Integer.parseInt(modifier.trim());
+                    result = validateAndFormatModifier(modifier, new String[]{});
+                    int chosenIdx = Integer.parseInt(result[0]); //throws NumberFormatException if not a number
                     outputMessage = textList.markAsDone(chosenIdx);
+                } catch (InvalidFormatException e) {
+                    outputMessage = e.getMessage();
                 } catch (NumberFormatException e) {
-                    outputMessage = "Dude, your mark command has the wrong format!";
+                    outputMessage = "that command isn't right: only numbers are allowed!";
                 }
                 break;
 
             case "unmark" :
-                //check if unmark format is valid
                 try {
-                    int chosenIdx = Integer.parseInt(modifier.trim());
+                    result = validateAndFormatModifier(modifier, new String[]{});
+                    int chosenIdx = Integer.parseInt(result[0]); //throws NumberFormatException if not a number
                     outputMessage = textList.unmarkAsDone(chosenIdx);
+                } catch (InvalidFormatException e) {
+                    outputMessage = e.getMessage();
                 } catch (NumberFormatException e) {
-                    outputMessage = "Dude, your unmark command has the wrong format!";
+                    outputMessage = "that command isn't right: only numbers are allowed!";
                 }
                 break;
 
             default :
                 //default response for invalid input
-                outputMessage = "What do you mean? Please try again dude";
+                outputMessage = "What do you mean? Please try again...";
             }
 
             //display the output and gather new input
