@@ -43,7 +43,7 @@ public class TaskManager {
                 getListSize()
         );
     }
-    public String markAsDone(int taskIdx) {
+    public String markTaskAsDone(int taskIdx) {
         try {
             int actualIdx = taskIdx - 1; //account for display vs actual index
             textList.get(actualIdx).markDone();
@@ -53,7 +53,7 @@ public class TaskManager {
         }
     }
 
-    public String unmarkAsDone(int taskIdx) {
+    public String unmarkTaskAsDone(int taskIdx) {
         try {
             int actualIdx = taskIdx - 1; //account for display vs actual index
             textList.get(actualIdx).unmarkDone();

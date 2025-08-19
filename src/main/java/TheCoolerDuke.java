@@ -98,7 +98,7 @@ public class TheCoolerDuke {
                 try {
                     result = validateAndFormatModifier(modifier, new String[]{});
                     int chosenIdx = Integer.parseInt(result[0]); //throws NumberFormatException if not a number
-                    outputMessage = textList.markAsDone(chosenIdx);
+                    outputMessage = textList.markTaskAsDone(chosenIdx);
                 } catch (InvalidFormatException e) {
                     outputMessage = e.getMessage();
                 } catch (NumberFormatException e) {
@@ -110,7 +110,7 @@ public class TheCoolerDuke {
                 try {
                     result = validateAndFormatModifier(modifier, new String[]{});
                     int chosenIdx = Integer.parseInt(result[0]); //throws NumberFormatException if not a number
-                    outputMessage = textList.unmarkAsDone(chosenIdx);
+                    outputMessage = textList.unmarkTaskAsDone(chosenIdx);
                 } catch (InvalidFormatException e) {
                     outputMessage = e.getMessage();
                 } catch (NumberFormatException e) {
