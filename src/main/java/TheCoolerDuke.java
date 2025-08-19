@@ -3,10 +3,12 @@ import java.util.Scanner;
 public class TheCoolerDuke {
     private static final String lineBreak = "_".repeat(72);
 
-    private static String inputHandler(Scanner scanner) {
+    private static String[] inputHandler(Scanner scanner) {
         System.out.println(lineBreak);
         System.out.print("User >>> ");
-        return scanner.nextLine();
+
+        //Split all inputs into [command, modifier]
+        return scanner.nextLine().trim().split(" ",2);
     }
 
     private static void outputHandler(String msg) {
@@ -14,54 +16,80 @@ public class TheCoolerDuke {
         System.out.println("Bot >>> " + msg);
     }
 
-    public static void echoFeature(Scanner scanner) {
-        String userMessage = inputHandler(scanner);
-
-        while (!userMessage.equals("bye")) {
-            //Echo if not "bye"
-            outputHandler("I'll say " + userMessage);
-
-            //Ask for input again
-            userMessage = inputHandler(scanner);
-        }
-    }
+    //TODO Check for empty fields in each part of the modifier
 
     public static void storeFeature(Scanner scanner) {
-        TextStorage textList = new TextStorage();
-        String userMessage = inputHandler(scanner);
-        String outputMessage = "";
+        TaskManager textList = new TaskManager();
+        String outputMessage;
 
-        while (!userMessage.equals("bye")) {
-            if (userMessage.equals("list")) {
-                //display whole textList on "list" message
-                outputMessage = textList.viewList();
+        //Split input into command and modifier
+        String[] result = inputHandler(scanner);
+        String command = result[0];
+        String modifier = result.length > 1 ? result[1] : "";
 
-            } else if (userMessage.startsWith("mark ")) {
-                //check if mark format is valid
-                try {
-                    int chosenIndex = Integer.parseInt(userMessage.substring("mark ".length()));
-                    outputMessage = textList.markAsDone(chosenIndex);
-                } catch (NumberFormatException e) {
-                    outputMessage = "Dude, your mark command has the wrong format!";
-                }
+        while (!command.equals("bye")) {
+            switch (command) {
+                case "list" :
+                    outputMessage = textList.viewList();
+                    break;
 
-            } else if (userMessage.startsWith("unmark ")) {
-                //check if unmark format is valid
-                try {
-                    int chosenIndex = Integer.parseInt(userMessage.substring("unmark ".length()));
-                    outputMessage = textList.unmarkAsDone(chosenIndex);
-                } catch (NumberFormatException e) {
-                    outputMessage = "Dude, your unmark command has the wrong format!";
-                }
+                case "todo" :
+                    outputMessage = textList.addTodoTask(modifier.trim());
+                    break;
 
-            } else {
-                //add item to textList otherwise
-                outputMessage = textList.addItem(userMessage);
+                case "deadline" :
+                    if (modifier.contains("/by")) {
+                        String[] params = modifier.split("/by");
+                        for (String i : params) {
+                            System.out.println(i);
+                        }
+                        outputMessage = textList.addDeadlineTask(params[0].trim(), params[1].trim());
+                    } else {
+                        outputMessage = "Dude, your deadline command has the wrong format!";
+                    }
+                    break;
+
+
+                case "event" :
+                    if (modifier.contains("/from") && modifier.contains("/to")) {
+                        String[] params = modifier.split("/from|/to");
+                        outputMessage = textList.addEventTask(params[0].trim(), params[1].trim(), params[2].trim());
+                    } else {
+                        outputMessage = "Dude, your event command has the wrong format!";
+                    }
+                    break;
+
+
+                case "mark" :
+                    //check if mark format is valid
+                    try {
+                        int chosenIdx = Integer.parseInt(modifier.trim());
+                        outputMessage = textList.markAsDone(chosenIdx);
+                    } catch (NumberFormatException e) {
+                        outputMessage = "Dude, your mark command has the wrong format!";
+                    }
+                    break;
+
+                case "unmark" :
+                    //check if unmark format is valid
+                    try {
+                        int chosenIdx = Integer.parseInt(modifier.trim());
+                        outputMessage = textList.unmarkAsDone(chosenIdx);
+                    } catch (NumberFormatException e) {
+                        outputMessage = "Dude, your unmark command has the wrong format!";
+                    }
+                    break;
+
+                default :
+                    //default response for invalid input
+                    outputMessage = "What do you mean? Please try again dude";
             }
 
             //display the output and gather new input
             outputHandler(outputMessage);
-            userMessage = inputHandler(scanner);
+            result = inputHandler(scanner);
+            command = result[0];
+            modifier = result.length > 1 ? result[1] : "";
         }
     }
 
@@ -79,6 +107,4 @@ public class TheCoolerDuke {
         System.out.println(lineBreak);
         System.out.println("Alright, I guess you're done :(\nGoodbye!");
     }
-
-
 }
