@@ -5,9 +5,12 @@ event RUNNUS 2025 /from 25 Sep, 6am /to 25 Sep, 10am
 list
 mark 1
 list
+delete 2
 hello
 todo
 deadline return book /by
 event /from 4pm /to 5pm
 deadline get food
+delete 0
+delete RUNNUS
 bye

@@ -43,6 +43,23 @@ public class TaskManager {
                 getListSize()
         );
     }
+
+    public String deleteTask(int taskIdx) {
+        try {
+            int actualIdx = taskIdx - 1; //account for display vs actual index
+            String deleted = viewTask(taskIdx - 1);
+            textList.remove(actualIdx);
+
+            return String.format(
+                    "Alright, I've have removed this task:\n\t%s\nYou now have %d tasks in the list.",
+                    deleted,
+                    getListSize()
+            );
+        } catch (IndexOutOfBoundsException e) {
+            return "The task at this index does not exist!";
+        }
+    }
+
     public String markTaskAsDone(int taskIdx) {
         try {
             int actualIdx = taskIdx - 1; //account for display vs actual index

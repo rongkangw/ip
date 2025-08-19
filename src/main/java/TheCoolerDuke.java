@@ -60,11 +60,11 @@ public class TheCoolerDuke {
 
         while (!command.equals("bye")) {
             switch (command) {
-            case "list" :
+            case "list":
                 outputMessage = textList.viewList();
                 break;
 
-            case "todo" :
+            case "todo":
                 try {
                     result = validateAndFormatModifier(modifier, new String[]{});
                     outputMessage = textList.addTodoTask(result[0]);
@@ -74,7 +74,7 @@ public class TheCoolerDuke {
                 }
                 break;
 
-            case "deadline" :
+            case "deadline":
                 try {
                     result = validateAndFormatModifier(modifier, new String[]{"/by"});
                     outputMessage = textList.addDeadlineTask(result[0], result[1]);
@@ -84,7 +84,7 @@ public class TheCoolerDuke {
                 }
                 break;
 
-            case "event" :
+            case "event":
                 try {
                     result = validateAndFormatModifier(modifier, new String[]{"/from", "/to"});
                     outputMessage = textList.addEventTask(result[0], result[1], result[2] );
@@ -94,7 +94,19 @@ public class TheCoolerDuke {
                 }
                 break;
 
-            case "mark" :
+            case "delete":
+                try {
+                    result = validateAndFormatModifier(modifier, new String[]{});
+                    int chosenIdx = Integer.parseInt(result[0]); //throws NumberFormatException if not a number
+                    outputMessage = textList.deleteTask(chosenIdx);
+                } catch (InvalidFormatException e) {
+                    outputMessage = e.getMessage();
+                } catch (NumberFormatException e) {
+                    outputMessage = "that command isn't right: only numbers are allowed!";
+                }
+                break;
+
+            case "mark":
                 try {
                     result = validateAndFormatModifier(modifier, new String[]{});
                     int chosenIdx = Integer.parseInt(result[0]); //throws NumberFormatException if not a number
@@ -106,7 +118,7 @@ public class TheCoolerDuke {
                 }
                 break;
 
-            case "unmark" :
+            case "unmark":
                 try {
                     result = validateAndFormatModifier(modifier, new String[]{});
                     int chosenIdx = Integer.parseInt(result[0]); //throws NumberFormatException if not a number
@@ -118,7 +130,7 @@ public class TheCoolerDuke {
                 }
                 break;
 
-            default :
+            default:
                 //default response for invalid input
                 outputMessage = "What do you mean? Please try again...";
             }
