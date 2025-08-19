@@ -1,4 +1,7 @@
-public class Deadline extends Task{
+/**
+ * Subclass of Task with additional completion time field.
+ */
+public class Deadline extends Task {
     private final String completeBy;
 
     public Deadline(String name, String completeBy) {

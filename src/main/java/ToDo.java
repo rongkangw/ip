@@ -1,4 +1,8 @@
-public class ToDo extends Task{
+/**
+ * Subclass of Task for clarity in naming.
+ * Does not have additional functionality on top of the identifier when displaying task.
+ */
+public class ToDo extends Task {
     public ToDo(String name) {
         super(name);
     }

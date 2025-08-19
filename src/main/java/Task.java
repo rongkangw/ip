@@ -1,3 +1,6 @@
+/**
+ * Represents a task with a name and a editable completion flag of isDone.
+ */
 public class Task {
     private final String name;
     private boolean isDone;
@@ -7,10 +10,18 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Marks task as done.
+     *
+     */
     public void markDone() {
         isDone = true;
     }
 
+    /**
+     * Unmarks task as done.
+     *
+     */
     public void unmarkDone() {
         isDone = false;
     }
