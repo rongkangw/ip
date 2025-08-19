@@ -1,0 +1,9 @@
+list
+todo buy groceries
+deadline return book /by Sunday 2pm
+event RUNNUS 2025 /from 25 Sep, 6am /to 25 Sep, 10am
+list
+mark 1
+list
+this command should not work
+bye

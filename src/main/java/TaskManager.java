@@ -18,7 +18,7 @@ public class TaskManager {
         ToDo newTask = new ToDo(task);
         textList.add(newTask);
         return String.format(
-                "\nAlright, I have added a new todo:\n\t%s\nYou now have %d tasks in the list.",
+                "Alright, I have added a new todo:\n\t%s\nYou now have %d tasks in the list.",
                 viewTask(textList.indexOf(newTask)),
                 getListSize()
         );
@@ -28,7 +28,7 @@ public class TaskManager {
         Deadline newTask = new Deadline(task, completeBy);
         textList.add(newTask);
         return String.format(
-                "\nAlright, I have added a new deadline:\n\t%s\nYou now have %d tasks in the list.",
+                "Alright, I have added a new deadline:\n\t%s\nYou now have %d tasks in the list.",
                 viewTask(textList.indexOf(newTask)),
                 getListSize()
         );
@@ -38,7 +38,7 @@ public class TaskManager {
         Event newTask = new Event(task, start, end);
         textList.add(newTask);
         return String.format(
-                "\nAlright, I have added a new event:\n\t%s\nYou now have %d tasks in the list.",
+                "Alright, I have added a new event:\n\t%s\nYou now have %d tasks in the list.",
                 viewTask(textList.indexOf(newTask)),
                 getListSize()
         );
@@ -47,7 +47,7 @@ public class TaskManager {
         try {
             int actualIdx = taskIdx - 1; //account for display vs actual index
             textList.get(actualIdx).markDone();
-            return String.format("\nOk! I've marked this task as done:\n%s", viewTask(actualIdx));
+            return String.format("Ok! I've marked this task as done:\n%s", viewTask(actualIdx));
         } catch (IndexOutOfBoundsException e) {
             return "The task at this index does not exist!";
         }
@@ -57,7 +57,7 @@ public class TaskManager {
         try {
             int actualIdx = taskIdx - 1; //account for display vs actual index
             textList.get(actualIdx).unmarkDone();
-            return String.format("\nOk! I've removed the mark from this task:\n%s", viewTask(actualIdx));
+            return String.format("Ok! I've removed the mark from this task:\n%s", viewTask(actualIdx));
         } catch (IndexOutOfBoundsException e) {
             return "The task at this index does not exist!";
         }
@@ -70,8 +70,7 @@ public class TaskManager {
             return "The list is empty!";
         } else {
             StringBuilder msg = new StringBuilder();
-            msg.append("\n");
-
+            msg.append("Here are the tasks in your list:\n");
             for (int i = 0; i < textList.size(); i++) {
                 msg.append(viewTask(i)).append("\n");
             }

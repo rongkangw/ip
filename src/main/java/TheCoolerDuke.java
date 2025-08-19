@@ -5,7 +5,7 @@ public class TheCoolerDuke {
 
     private static String[] inputHandler(Scanner scanner) {
         System.out.println(lineBreak);
-        System.out.print("User >>> ");
+        System.out.print("User >>>\n");
 
         //Split all inputs into [command, modifier]
         return scanner.nextLine().trim().split(" ",2);
@@ -13,7 +13,7 @@ public class TheCoolerDuke {
 
     private static void outputHandler(String msg) {
         System.out.println(lineBreak);
-        System.out.println("Bot >>> " + msg);
+        System.out.println("Bot >>>\n" + msg);
     }
 
     //TODO Check for empty fields in each part of the modifier
