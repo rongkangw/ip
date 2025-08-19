@@ -16,8 +16,6 @@ public class TheCoolerDuke {
         System.out.println("Bot >>>\n" + msg);
     }
 
-    //TODO Check for empty fields in each part of the modifier
-
     public static void storeFeature(Scanner scanner) {
         TaskManager textList = new TaskManager();
         String outputMessage;
@@ -29,60 +27,55 @@ public class TheCoolerDuke {
 
         while (!command.equals("bye")) {
             switch (command) {
-                case "list" :
-                    outputMessage = textList.viewList();
-                    break;
+            case "list" :
+                outputMessage = textList.viewList();
+                break;
 
-                case "todo" :
-                    outputMessage = textList.addTodoTask(modifier.trim());
-                    break;
+            case "todo" :
+                outputMessage = textList.addTodoTask(modifier.trim());
+                break;
 
-                case "deadline" :
-                    if (modifier.contains("/by")) {
-                        String[] params = modifier.split("/by");
-                        for (String i : params) {
-                            System.out.println(i);
-                        }
-                        outputMessage = textList.addDeadlineTask(params[0].trim(), params[1].trim());
-                    } else {
-                        outputMessage = "Dude, your deadline command has the wrong format!";
-                    }
-                    break;
+            case "deadline" :
+                if (modifier.contains("/by")) {
+                    String[] params = modifier.split("/by");
+                    outputMessage = textList.addDeadlineTask(params[0].trim(), params[1].trim());
+                } else {
+                    outputMessage = "Dude, your deadline command has the wrong format!";
+                }
+                break;
 
+            case "event" :
+                if (modifier.contains("/from") && modifier.contains("/to")) {
+                    String[] params = modifier.split("/from|/to");
+                    outputMessage = textList.addEventTask(params[0].trim(), params[1].trim(), params[2].trim());
+                } else {
+                    outputMessage = "Dude, your event command has the wrong format!";
+                }
+                break;
 
-                case "event" :
-                    if (modifier.contains("/from") && modifier.contains("/to")) {
-                        String[] params = modifier.split("/from|/to");
-                        outputMessage = textList.addEventTask(params[0].trim(), params[1].trim(), params[2].trim());
-                    } else {
-                        outputMessage = "Dude, your event command has the wrong format!";
-                    }
-                    break;
+            case "mark" :
+                //check if mark format is valid
+                try {
+                    int chosenIdx = Integer.parseInt(modifier.trim());
+                    outputMessage = textList.markAsDone(chosenIdx);
+                } catch (NumberFormatException e) {
+                    outputMessage = "Dude, your mark command has the wrong format!";
+                }
+                break;
 
+            case "unmark" :
+                //check if unmark format is valid
+                try {
+                    int chosenIdx = Integer.parseInt(modifier.trim());
+                    outputMessage = textList.unmarkAsDone(chosenIdx);
+                } catch (NumberFormatException e) {
+                    outputMessage = "Dude, your unmark command has the wrong format!";
+                }
+                break;
 
-                case "mark" :
-                    //check if mark format is valid
-                    try {
-                        int chosenIdx = Integer.parseInt(modifier.trim());
-                        outputMessage = textList.markAsDone(chosenIdx);
-                    } catch (NumberFormatException e) {
-                        outputMessage = "Dude, your mark command has the wrong format!";
-                    }
-                    break;
-
-                case "unmark" :
-                    //check if unmark format is valid
-                    try {
-                        int chosenIdx = Integer.parseInt(modifier.trim());
-                        outputMessage = textList.unmarkAsDone(chosenIdx);
-                    } catch (NumberFormatException e) {
-                        outputMessage = "Dude, your unmark command has the wrong format!";
-                    }
-                    break;
-
-                default :
-                    //default response for invalid input
-                    outputMessage = "What do you mean? Please try again dude";
+            default :
+                //default response for invalid input
+                outputMessage = "What do you mean? Please try again dude";
             }
 
             //display the output and gather new input
@@ -101,7 +94,6 @@ public class TheCoolerDuke {
         System.out.println("Hello! I'm TheCoolerDuke");
         System.out.println("What can I do for you?");
 
-        //echoFeature(scanner);
         storeFeature(scanner);
 
         System.out.println(lineBreak);

@@ -5,6 +5,6 @@ public class ToDo extends Task{
 
     @Override
     public String showTask() {
-        return String.format("[T]%s",super.showTask());
+        return String.format("[T]%s", super.showTask());
     }
 }

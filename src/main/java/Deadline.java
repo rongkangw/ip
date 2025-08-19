@@ -8,6 +8,6 @@ public class Deadline extends Task{
 
     @Override
     public String showTask() {
-        return String.format("[D]%s (by: %s)",super.showTask(), this.completeBy);
+        return String.format("[D]%s (by: %s)", super.showTask(), this.completeBy);
     }
 }
