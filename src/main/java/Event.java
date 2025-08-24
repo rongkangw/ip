@@ -5,8 +5,8 @@ public class Event extends Task {
     private final String start;
     private final String end;
 
-    public Event(String name, String start, String end) {
-        super(name);
+    public Event(String name, boolean isDone, String start, String end) {
+        super(name, isDone);
         this.start = start;
         this.end = end;
     }
@@ -14,5 +14,10 @@ public class Event extends Task {
     @Override
     public String showTask() {
         return String.format("[E]%s (from: %s, to: %s)", super.showTask(), this.start, this.end);
+    }
+
+    @Override
+    public String saveTask() {
+        return String.format("%s,%s,%s,%s", "E", super.saveTask(), start, end);
     }
 }

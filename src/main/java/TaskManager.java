@@ -1,10 +1,17 @@
 import java.util.ArrayList;
 
 /**
- * Acts as a list-based task manager, with ability to add, view, mark/unmark, and delete tasks
+ * Acts as a list-based task manager.
+ * Ability to add, view, mark/unmark, and delete tasks.
  */
 public class TaskManager {
-    private final ArrayList<Task> taskList = new ArrayList<>();
+    private final ArrayList<Task> taskList;
+    private final TaskHistoryManager thm;
+
+    public TaskManager(TaskHistoryManager thm) {
+        this.taskList = new ArrayList<>();
+        this.thm = thm;
+    }
     
     //returns a single task as "X. taskName"
     private String viewTask(int taskIdx) {
@@ -17,14 +24,28 @@ public class TaskManager {
     }
 
     /**
+     * Must be run before usage of task manager.
+     * Initialise the task manager with startup process:
+     * - Fetches task history from disk and insert into taskList
+     *
+     * @return Output string for display
+     */
+    public String startupTaskManager() {
+        return thm.retrieveTaskHistory(taskList)
+                ? String.format("Previous task history found! %d tasks retrieved", taskList.size())
+                : String.format("%s", "No task history found/History is corrupt. Creating new taskList!");
+    }
+
+    /**
      * Creates a new ToDo task and adds to the task list.
      *
      * @param task Name of the task
      * @return Output string for display
      */
     public String addTodoTask(String task) {
-        ToDo newTask = new ToDo(task);
+        ToDo newTask = new ToDo(task, false);
         taskList.add(newTask);
+        thm.updateHistory(taskList);
         return String.format(
                 "Alright, I have added a new todo:\n\t%s\nYou now have %d tasks in the list.",
                 viewTask(taskList.indexOf(newTask)),
@@ -40,8 +61,9 @@ public class TaskManager {
      * @return Output string for display
      */
     public String addDeadlineTask(String task, String completeBy) {
-        Deadline newTask = new Deadline(task, completeBy);
+        Deadline newTask = new Deadline(task, false, completeBy);
         taskList.add(newTask);
+        thm.updateHistory(taskList);
         return String.format(
                 "Alright, I have added a new deadline:\n\t%s\nYou now have %d tasks in the list.",
                 viewTask(taskList.indexOf(newTask)),
@@ -58,8 +80,9 @@ public class TaskManager {
      * @return Output string for display
      */
     public String addEventTask(String task, String start, String end) {
-        Event newTask = new Event(task, start, end);
+        Event newTask = new Event(task, false, start, end);
         taskList.add(newTask);
+        thm.updateHistory(taskList);
         return String.format(
                 "Alright, I have added a new event:\n\t%s\nYou now have %d tasks in the list.",
                 viewTask(taskList.indexOf(newTask)),
@@ -79,6 +102,7 @@ public class TaskManager {
             int actualIdx = taskIdx - 1; //account for display vs actual index
             String deleted = viewTask(taskIdx - 1);
             taskList.remove(actualIdx);
+            thm.updateHistory(taskList);
 
             return String.format(
                     "Alright, I've have removed this task:\n\t%s\nYou now have %d tasks in the list.",
@@ -102,6 +126,8 @@ public class TaskManager {
         try {
             int actualIdx = taskIdx - 1; //account for display vs actual index
             taskList.get(actualIdx).markDone();
+            thm.updateHistory(taskList);
+
             return String.format("Ok! I've marked this task as done:\n%s", viewTask(actualIdx));
 
         } catch (IndexOutOfBoundsException e) {
@@ -120,13 +146,14 @@ public class TaskManager {
         try {
             int actualIdx = taskIdx - 1; //account for display vs actual index
             taskList.get(actualIdx).unmarkDone();
+            thm.updateHistory(taskList);
+
             return String.format("Ok! I've removed the mark from this task:\n%s", viewTask(actualIdx));
+
         } catch (IndexOutOfBoundsException e) {
             return "The task at this index does not exist!";
         }
     }
-
-    //returns a list of tasks as "X. taskName" per row
 
     /**
      * Displays the list of tasks in the task list.

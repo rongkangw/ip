@@ -22,8 +22,12 @@ public class TheCoolerDuke {
      * @param scanner Scanner object passed for user inputs
      */
     public static void taskManagerFeature(Scanner scanner) {
-        TaskManager tm = new TaskManager();
+        TaskHistoryManager thm = new TaskHistoryManager();
+        TaskManager tm = new TaskManager(thm);
         String outputMessage;
+
+        //Startup task manager and display output message
+        outputHandler(tm.startupTaskManager());
 
         //Split input into command and modifier
         String[] input = inputHandler(scanner);

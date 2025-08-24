@@ -1,13 +1,13 @@
 /**
- * Represents a task with a name and a editable completion flag of isDone.
+ * Represents a task with a name and an editable completion flag of isDone.
  */
 public class Task {
     private final String name;
     private boolean isDone;
 
-    public Task(String name) {
+    public Task(String name, boolean isDone) {
         this.name = name;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     /**
@@ -29,5 +29,10 @@ public class Task {
     public String showTask() {
         String doneIcon = isDone ? "X" : " ";
         return String.format("[%s] %s", doneIcon, name);
+    }
+
+    public String saveTask() {
+        int doneFlag = isDone ? 1 : 0;
+        return String.format("%d,%s", doneFlag, name);
     }
 }
