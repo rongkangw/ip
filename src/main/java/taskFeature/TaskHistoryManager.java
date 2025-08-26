@@ -77,7 +77,6 @@ public class TaskHistoryManager {
                     LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_INPUT_FORMAT);
                     yield new Event(name, isDone, parsedFrom, parsedTo);
                 } catch (DateTimeParseException e) {
-                    System.out.println(e.getMessage() + additionalParams[0].charAt(6));
                     throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
                 }
             }
@@ -98,21 +97,25 @@ public class TaskHistoryManager {
      * @throws Error If file unable to be created at PATH_DIR
      */
     public boolean retrieveTaskHistory(ArrayList<Task> taskList) {
-        try {
+        try (Scanner s = new Scanner(file)) {
             taskList.clear();
-            Scanner s = new Scanner(file);
+
             while (s.hasNextLine()) {
                 Task task = getTaskFromLine(s.nextLine());
                 taskList.add(task);
             }
 
-            return true;
+            //flag as no history found (false) if no tasks but file exists
+            //else flag as true
+            return !taskList.isEmpty();
 
         } catch (FileNotFoundException | InvalidFormatException e) {
+
             try {
                 //creates a new history file if it does not exist // is invalid format
                 //result added to suppress return
-                boolean result = file.createNewFile();
+                boolean result1 = file.delete();
+                boolean result2 = file.createNewFile();
 
                 return false;
 
