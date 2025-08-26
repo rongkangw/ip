@@ -4,9 +4,17 @@ import java.util.Scanner;
  * A chatbot that helps keep track of your tasks, with persistent storage functionality.
  */
 public class TheCoolerDuke {
-    private static final String lineBreak = "_".repeat(72);
+    private final String lineBreak = "_".repeat(72);
+    private final Scanner scanner;
+    private final TaskManager tm;
 
-    private static String[] inputHandler(Scanner scanner) {
+    public TheCoolerDuke(Scanner scanner) {
+        TaskHistoryManager thm = new TaskHistoryManager();
+        this.tm = new TaskManager(thm);
+        this.scanner = scanner;
+    }
+
+    private String[] inputHandler(Scanner scanner) {
         System.out.println(lineBreak);
         System.out.print("User >>>\n");
 
@@ -14,7 +22,7 @@ public class TheCoolerDuke {
         return scanner.nextLine().trim().split(" ",2);
     }
 
-    private static void outputHandler(String msg) {
+    private void outputHandler(String msg) {
         System.out.println(lineBreak);
         System.out.println("Bot >>>\n" + msg);
     }
@@ -24,9 +32,7 @@ public class TheCoolerDuke {
      *
      * @param scanner Scanner object passed for user inputs
      */
-    public static void taskManagerFeature(Scanner scanner) {
-        TaskHistoryManager thm = new TaskHistoryManager();
-        TaskManager tm = new TaskManager(thm);
+    private void taskManagerFeature(Scanner scanner) {
         String outputMessage;
 
         //Startup task manager and display output message
@@ -56,10 +62,10 @@ public class TheCoolerDuke {
         }
     }
 
-    public static void main(String[] args) {
-        //Initialise scanner for input
-        Scanner scanner = new Scanner(System.in);
-
+    /**
+     * Use this method to start the chatbot.
+     */
+    public void run() {
         System.out.println(lineBreak);
         System.out.println("Hello! I'm TheCoolerDuke");
         System.out.println("What can I do for you?");
@@ -68,5 +74,10 @@ public class TheCoolerDuke {
 
         System.out.println(lineBreak);
         System.out.println("Alright, I guess you're done :(\nGoodbye!");
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        new TheCoolerDuke(scanner).run();
     }
 }

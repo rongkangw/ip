@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -10,7 +9,6 @@ public class Task {
     protected static final DateTimeFormatter DATETIME_INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
     private final String name;
     private boolean isDone;
-
 
     public Task(String name, boolean isDone) {
         this.name = name;

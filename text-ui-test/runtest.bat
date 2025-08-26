@@ -1,21 +1,28 @@
 @ECHO OFF
 
+pushd "%~dp0\.."
+
 REM create bin directory if it doesn't exist
-if not exist ..\bin mkdir ..\bin
+if not exist bin mkdir bin
 
 REM delete output from previous run
-if exist ACTUAL.TXT del ACTUAL.TXT
+if exist text-ui-test\ACTUAL.txt del text-ui-test\ACTUAL.txt
+
+REM delete TaskHistory.txt from previous run
+if exist src\main\data\TaskHistory.txt del src\main\data\TaskHistory.txt
 
 REM compile the code into the bin folder
-javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\*.java
+javac -Xlint:none -d bin src\main\java\*.java
+
 IF ERRORLEVEL 1 (
     echo ********** BUILD FAILURE **********
     exit /b 1
 )
+
 REM no error here, errorlevel == 0
 
 REM run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ..\bin TheCoolerDuke < input.txt > ACTUAL.TXT
+java -classpath bin TheCoolerDuke < text-ui-test\INPUT.txt > text-ui-test\ACTUAL.txt
 
-REM compare the output to the expected output
-FC ACTUAL.TXT EXPECTED.TXT
+REM compare output to expected
+FC text-ui-test\ACTUAL.txt text-ui-test\EXPECTED.txt

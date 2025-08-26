@@ -2,8 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,9 @@ import java.util.Scanner;
  * Allows for reading and writing only.
  */
 public class TaskHistoryManager {
-    private static final String PATH_DIR = "./src/data/TaskHistory.txt";
+    private static final String PATH_DIR = Paths.get(
+            "src", "main", "data", "TaskHistory.txt"
+    ).toString();
     private final File file;
 
     private Task getTaskFromLine(String line) throws InvalidFormatException {
@@ -107,7 +109,7 @@ public class TaskHistoryManager {
                 return false;
 
             } catch (IOException ioe) {
-                throw new Error("File could not be created");
+                throw new Error(ioe.getMessage());
             }
         }
     }

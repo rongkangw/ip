@@ -1,7 +1,7 @@
 list
 todo buy groceries
-deadline return book /by Sunday 2pm
-event RUNNUS 2025 /from 25 Sep, 6am /to 25 Sep, 10am
+deadline return book /by 23/9/2025 10:00
+event RUNNUS 2025 /from 25/9/2025 06:00 /to 25/9/2025 10:00
 list
 mark 1
 list
@@ -9,7 +9,8 @@ delete 2
 hello
 todo
 deadline return book /by
-event /from 4pm /to 5pm
+event /from 12/2/2025 16:00 /to 12/2/2025 17:00
+event wedding /from 12/2/2025 /to 12/2/2025 17:00
 deadline get food
 delete 0
 delete RUNNUS
