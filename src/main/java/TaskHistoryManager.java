@@ -2,6 +2,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -45,13 +48,26 @@ public class TaskHistoryManager {
                 if (additionalParams.length < 1) {
                     throw new InvalidFormatException("File has incorrect format: Wrong additional params");
                 }
-                yield new Deadline(name, isDone, additionalParams[0]);
+
+                try {
+                    LocalDateTime parsed = LocalDateTime.parse(additionalParams[0], Task.DATETIME_OUTPUT_FORMAT);
+                    yield new Deadline(name, isDone, parsed);
+                } catch (DateTimeParseException e) {
+                    throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
+                }
             }
             case "E" -> {
                 if (additionalParams.length < 2) {
                     throw new InvalidFormatException("File has incorrect format: Wrong additional params");
                 }
-                yield new Event(name, isDone, additionalParams[0], additionalParams[1]);
+
+                try {
+                    LocalDateTime parsedFrom = LocalDateTime.parse(additionalParams[0], Task.DATETIME_OUTPUT_FORMAT);
+                    LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_OUTPUT_FORMAT);
+                    yield new Event(name, isDone, parsedFrom, parsedTo);
+                } catch (DateTimeParseException e) {
+                    throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
+                }
             }
             default -> throw new InvalidFormatException("File has incorrect format: Wrong task type");
         };

@@ -1,11 +1,13 @@
+import java.time.LocalDateTime;
+
 /**
  * Subclass of Task with additional start and end date/time field.
  */
 public class Event extends Task {
-    private final String start;
-    private final String end;
+    private final LocalDateTime start;
+    private final LocalDateTime end;
 
-    public Event(String name, boolean isDone, String start, String end) {
+    public Event(String name, boolean isDone, LocalDateTime start, LocalDateTime end) {
         super(name, isDone);
         this.start = start;
         this.end = end;
@@ -13,11 +15,21 @@ public class Event extends Task {
 
     @Override
     public String showTask() {
-        return String.format("[E]%s (from: %s, to: %s)", super.showTask(), this.start, this.end);
+        return String.format(
+                "[E]%s (from: %s, to: %s)",
+                super.showTask(),
+                start.format(DATETIME_OUTPUT_FORMAT),
+                end.format(DATETIME_OUTPUT_FORMAT)
+        );
     }
 
     @Override
     public String saveTask() {
-        return String.format("%s,%s,%s,%s", "E", super.saveTask(), start, end);
+        return String.format(
+                "%s,%s,%s,%s", "E",
+                super.saveTask(),
+                start.format(DATETIME_OUTPUT_FORMAT),
+                end.format(DATETIME_OUTPUT_FORMAT)
+        );
     }
 }

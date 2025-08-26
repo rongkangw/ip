@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -60,7 +61,7 @@ public class TaskManager {
      * @param completeBy Completion date/time of the task as String
      * @return Output string for display
      */
-    public String addDeadlineTask(String task, String completeBy) {
+    public String addDeadlineTask(String task, LocalDateTime completeBy) {
         Deadline newTask = new Deadline(task, false, completeBy);
         taskList.add(newTask);
         thm.updateHistory(taskList);
@@ -79,7 +80,7 @@ public class TaskManager {
      * @param end End date/time of the task as String
      * @return Output string for display
      */
-    public String addEventTask(String task, String start, String end) {
+    public String addEventTask(String task, LocalDateTime start, LocalDateTime end) {
         Event newTask = new Event(task, false, start, end);
         taskList.add(newTask);
         thm.updateHistory(taskList);

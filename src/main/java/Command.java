@@ -1,3 +1,7 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public enum Command {
     LIST_TASK("list") {
         @Override
@@ -23,9 +27,13 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{"/by"});
-                return tm.addDeadlineTask(result[0], result[1]);
+                System.out.println(result[1]);
+                LocalDateTime parsedBy = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
+                return tm.addDeadlineTask(result[0], parsedBy);
             } catch (InvalidFormatException e) {
                 return e.getMessage();
+            } catch (DateTimeParseException e) {
+                return "Invalid datetime!  Use format dd/mm/yyyy hh:mm (24 hour format).";
             }
         }
     },
@@ -35,9 +43,13 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{"/from", "/to"});
-                return tm.addEventTask(result[0], result[1], result[2]);
+                LocalDateTime parsedFrom = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
+                LocalDateTime parsedTo = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
+                return tm.addEventTask(result[0], parsedFrom, parsedTo);
             } catch (InvalidFormatException e) {
                 return e.getMessage();
+            } catch (DateTimeParseException e) {
+                return "Invalid datetime! Use format dd/mm/yyyy hh:mm (24 hour format).";
             }
         }
     },
@@ -128,7 +140,7 @@ public enum Command {
             throw new InvalidFormatException(String.format("missing the modifier(s):%s!", missing));
         }
 
-        //format the modifier into its parameters based on the accepted modifiers
+        //format the modifier into its parameters with the accepted modifiers as separators
         String regex = String.join("|", acceptedModifiers);
         String[] params = modifier.split(regex, acceptedModifiers.length + 1);
 

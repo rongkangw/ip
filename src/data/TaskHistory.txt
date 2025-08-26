@@ -1,3 +1,2 @@
-E,0,wedding,10pm,4pm
-T,1,buy some stuff
-D,0,homework,10pm
+T,0,cehck food
+D,0,event,12 Feb 2025 19:00
