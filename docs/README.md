@@ -1,4 +1,4 @@
-# TheCoolerDuke User Guide
+# ui.TheCoolerDuke User Guide
 
 // Update the title above to match the actual product name
 

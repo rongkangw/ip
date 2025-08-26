@@ -1,3 +1,9 @@
+package taskFeature;
+
+import taskFeature.tasks.Deadline;
+import taskFeature.tasks.Event;
+import taskFeature.tasks.ToDo;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -106,7 +112,7 @@ public class TaskManager {
             thm.updateHistory(taskList);
 
             return String.format(
-                    "Alright, I've have removed this task:\n\t%s\nYou now have %d tasks in the list.",
+                    "Alright, I've removed this task:\n\t%s\nYou now have %d tasks in the list.",
                     deleted,
                     getListSize()
             );

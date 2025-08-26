@@ -1,7 +1,11 @@
+package taskFeature.tasks;
+
+import taskFeature.Task;
+
 import java.time.LocalDateTime;
 
 /**
- * Subclass of Task with additional start and end date/time field.
+ * Subclass of taskFeature.Task with additional start and end date/time field.
  */
 public class Event extends Task {
     private final LocalDateTime start;
@@ -28,8 +32,8 @@ public class Event extends Task {
         return String.format(
                 "%s,%s,%s,%s", "E",
                 super.saveTask(),
-                start.format(DATETIME_OUTPUT_FORMAT),
-                end.format(DATETIME_OUTPUT_FORMAT)
+                start.format(DATETIME_INPUT_FORMAT),
+                end.format(DATETIME_INPUT_FORMAT)
         );
     }
 }

@@ -1,3 +1,10 @@
+package taskFeature;
+
+import exceptions.InvalidFormatException;
+import taskFeature.tasks.Deadline;
+import taskFeature.tasks.Event;
+import taskFeature.tasks.ToDo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -53,7 +60,7 @@ public class TaskHistoryManager {
 
                 //check that valid datetime format is provided
                 try {
-                    LocalDateTime parsed = LocalDateTime.parse(additionalParams[0], Task.DATETIME_OUTPUT_FORMAT);
+                    LocalDateTime parsed = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
                     yield new Deadline(name, isDone, parsed);
                 } catch (DateTimeParseException e) {
                     throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
@@ -66,10 +73,11 @@ public class TaskHistoryManager {
 
                 //check that valid datetime format is provided
                 try {
-                    LocalDateTime parsedFrom = LocalDateTime.parse(additionalParams[0], Task.DATETIME_OUTPUT_FORMAT);
-                    LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_OUTPUT_FORMAT);
+                    LocalDateTime parsedFrom = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
+                    LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_INPUT_FORMAT);
                     yield new Event(name, isDone, parsedFrom, parsedTo);
                 } catch (DateTimeParseException e) {
+                    System.out.println(e.getMessage() + additionalParams[0].charAt(6));
                     throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
                 }
             }
@@ -85,7 +93,7 @@ public class TaskHistoryManager {
      * Retrieve task history from file specified in PATH_DIR.
      * If file not found or invalid format, creates new file instead.
      *
-     * @param taskList The taskList provided by the TaskManager for inserting retrieved history
+     * @param taskList The taskList provided by the taskFeature.TaskManager for inserting retrieved history
      * @return true if task history exists, false if task history file not found or invalid.
      * @throws Error If file unable to be created at PATH_DIR
      */
@@ -117,7 +125,7 @@ public class TaskHistoryManager {
     /**
      * Updates task history in file specified in PATH_DIR
      *
-     * @param history The taskList provided by the TaskManager for updating history
+     * @param history The taskList provided by the taskFeature.TaskManager for updating history
      * @throws Error If unable to write to file
      */
     public void updateHistory(ArrayList<Task> history) {

@@ -1,7 +1,11 @@
+package taskFeature.tasks;
+
+import taskFeature.Task;
+
 import java.time.LocalDateTime;
 
 /**
- * Subclass of Task with additional completion time field.
+ * Subclass of taskFeature.Task with additional completion time field.
  */
 public class Deadline extends Task {
     private final LocalDateTime completeBy;
@@ -24,7 +28,7 @@ public class Deadline extends Task {
         return String.format(
                 "%s,%s,%s", "D",
                 super.saveTask(),
-                this.completeBy.format(DATETIME_OUTPUT_FORMAT)
+                this.completeBy.format(DATETIME_INPUT_FORMAT)
         );
     }
 }

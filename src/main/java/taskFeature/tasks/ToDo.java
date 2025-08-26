@@ -1,5 +1,9 @@
+package taskFeature.tasks;
+
+import taskFeature.Task;
+
 /**
- * Subclass of Task for clarity in naming.
+ * Subclass of taskFeature.Task for clarity in naming.
  * Does not have additional functionality on top of the identifier when displaying task.
  */
 public class ToDo extends Task {

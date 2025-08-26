@@ -12,7 +12,11 @@ REM delete TaskHistory.txt from previous run
 if exist src\main\data\TaskHistory.txt del src\main\data\TaskHistory.txt
 
 REM compile the code into the bin folder
-javac -Xlint:none -d bin src\main\java\*.java
+javac -Xlint:none -d bin ^
+src\main\java\exceptions\*.java ^
+src\main\java\taskFeature\*.java ^
+src\main\java\taskFeature\tasks\*.java ^
+src\main\java\ui\*.java
 
 IF ERRORLEVEL 1 (
     echo ********** BUILD FAILURE **********

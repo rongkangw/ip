@@ -1,3 +1,5 @@
+package taskFeature;
+
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -5,8 +7,8 @@ import java.time.format.DateTimeFormatter;
  * Additional datetime information can be saved using DATETIME_OUTPUT_FORMAT and DATETIME_INPUT_FORMAT.
  */
 public class Task {
-    protected static final DateTimeFormatter DATETIME_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm");
-    protected static final DateTimeFormatter DATETIME_INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
+    public static final DateTimeFormatter DATETIME_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm");
+    public static final DateTimeFormatter DATETIME_INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
     private final String name;
     private boolean isDone;
 

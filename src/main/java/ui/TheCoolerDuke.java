@@ -1,3 +1,8 @@
+package ui;
+
+import taskFeature.TaskHistoryManager;
+import taskFeature.TaskManager;
+
 import java.util.Scanner;
 
 /**
