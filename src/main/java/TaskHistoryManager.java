@@ -49,6 +49,7 @@ public class TaskHistoryManager {
                     throw new InvalidFormatException("File has incorrect format: Wrong additional params");
                 }
 
+                //check that valid datetime format is provided
                 try {
                     LocalDateTime parsed = LocalDateTime.parse(additionalParams[0], Task.DATETIME_OUTPUT_FORMAT);
                     yield new Deadline(name, isDone, parsed);
@@ -61,6 +62,7 @@ public class TaskHistoryManager {
                     throw new InvalidFormatException("File has incorrect format: Wrong additional params");
                 }
 
+                //check that valid datetime format is provided
                 try {
                     LocalDateTime parsedFrom = LocalDateTime.parse(additionalParams[0], Task.DATETIME_OUTPUT_FORMAT);
                     LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_OUTPUT_FORMAT);

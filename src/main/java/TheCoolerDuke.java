@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * A chatbot that helps keep track of your tasks, with persistent storage functionality.
+ */
 public class TheCoolerDuke {
     private static final String lineBreak = "_".repeat(72);
 

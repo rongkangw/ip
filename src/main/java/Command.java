@@ -1,7 +1,11 @@
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Provides a set of valid commands to be used when interacting with TheCoolerDuke chatbot.
+ * Commands will be in the format of "[Command] [Additional Modifiers]"
+ * Additional Modifiers are in String and are space separated.
+ */
 public enum Command {
     LIST_TASK("list") {
         @Override
@@ -27,9 +31,9 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{"/by"});
-                System.out.println(result[1]);
                 LocalDateTime parsedBy = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
                 return tm.addDeadlineTask(result[0], parsedBy);
+
             } catch (InvalidFormatException e) {
                 return e.getMessage();
             } catch (DateTimeParseException e) {
@@ -46,6 +50,7 @@ public enum Command {
                 LocalDateTime parsedFrom = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
                 LocalDateTime parsedTo = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
                 return tm.addEventTask(result[0], parsedFrom, parsedTo);
+
             } catch (InvalidFormatException e) {
                 return e.getMessage();
             } catch (DateTimeParseException e) {
@@ -61,6 +66,7 @@ public enum Command {
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.deleteTask(idx);
+
             } catch (InvalidFormatException e) {
                 return e.getMessage();
             } catch (NumberFormatException e) {
@@ -76,6 +82,7 @@ public enum Command {
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.markTaskAsDone(idx);
+
             } catch (InvalidFormatException e) {
                 return e.getMessage();
             } catch (NumberFormatException e) {
@@ -91,6 +98,7 @@ public enum Command {
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.unmarkTaskAsDone(idx);
+
             } catch (InvalidFormatException e) {
                 return e.getMessage();
             } catch (NumberFormatException e) {
