@@ -126,7 +126,7 @@ public enum Command {
      * If invalid command, returns null.
      *
      * @param input User input as a String
-     * @return Command object
+     * @return Command object else null
      */
     public static Command validateCommand(String input) {
         for (Command c : values()) {
@@ -139,7 +139,9 @@ public enum Command {
 
     //checks modifier is of correct format based on provided acceptedModifiers
     //returns the separated String[] version of the modifier if valid
-    private static String[] validateAndFormatModifier(String modifier, String[] acceptedModifiers) throws InvalidFormatException {
+    protected static String[] validateAndFormatModifier(
+            String modifier, String[] acceptedModifiers
+    ) throws InvalidFormatException {
 
         //check that modifier contains the accepted modifiers provided
         StringBuilder missing = new StringBuilder();
