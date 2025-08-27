@@ -21,10 +21,11 @@ import java.util.Scanner;
  * Allows for reading and writing only.
  */
 public class TaskHistoryManager {
-    private static final String PATH_DIR = Paths.get(
-            "src", "main", "data", "TaskHistory.txt"
-    ).toString();
     private final File file;
+
+    public TaskHistoryManager(String pathDir) {
+        this.file = new File(pathDir);
+    }
 
     private Task getTaskFromLine(String line) throws InvalidFormatException {
         //1. Initial check for all lines to have commas
@@ -84,17 +85,13 @@ public class TaskHistoryManager {
         };
     }
 
-    public TaskHistoryManager() {
-        this.file = new File(PATH_DIR);
-    }
-
     /**
-     * Retrieve task history from file specified in PATH_DIR.
+     * Retrieve task history from file specified in pathDir.
      * If file not found or invalid format, creates new file instead.
      *
      * @param taskList The taskList provided by the taskFeature.TaskManager for inserting retrieved history
-     * @return true if task history exists, false if task history file not found or invalid.
-     * @throws Error If file unable to be created at PATH_DIR
+     * @return true if task history exists, false if task history file not found, invalid, or empty.
+     * @throws Error If file unable to be created at pathDir
      */
     public boolean retrieveTaskHistory(ArrayList<Task> taskList) {
         try (Scanner s = new Scanner(file)) {
@@ -126,7 +123,7 @@ public class TaskHistoryManager {
     }
 
     /**
-     * Updates task history in file specified in PATH_DIR
+     * Updates task history in file specified in pathDir
      *
      * @param history The taskList provided by the taskFeature.TaskManager for updating history
      * @throws Error If unable to write to file
