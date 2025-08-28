@@ -34,6 +34,15 @@ public class Task {
     }
 
     /**
+     * Checks if the task name is similar to the search name provided, using String.contains()
+     *
+     * @return true if task name contains the search name, else false
+     */
+    public boolean isSimilarTaskName(String searchName) {
+        return name.contains(searchName);
+    }
+
+    /**
      * Formats task information for displaying.
      *
      * @return Task information as a formatted String

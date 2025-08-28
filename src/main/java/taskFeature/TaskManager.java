@@ -163,6 +163,30 @@ public class TaskManager {
     }
 
     /**
+     * Searches for tasks in taskList containing the query string in the task name.
+     * If no tasks found, returns appropriate String response.
+     *
+     * @param taskName The search string given by the user
+     * @return Output string for display as a list of tasks found
+     */
+    public String findTaskByName(String taskName) {
+        StringBuilder outputString = new StringBuilder();
+
+        //add all tasks containing search string to output string
+        for (int i = 0; i < taskList.size(); i++) {
+            Task currTask = taskList.get(i);
+
+            if (currTask.isSimilarTaskName(taskName)) {
+                outputString.append(viewTask(i)).append("\n");
+            }
+        }
+
+        return !outputString.isEmpty()
+                ? String.format("%s\n%s", "Here are the tasks I found:" , outputString)
+                : "No tasks found!";
+    }
+
+    /**
      * Displays the list of tasks in the task list.
      * Checks for empty list and returns appropriate String response.
      *
