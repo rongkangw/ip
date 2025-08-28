@@ -15,6 +15,13 @@ public class TaskManager {
     private final ArrayList<Task> taskList;
     private final TaskHistoryManager thm;
 
+    /**
+     * Initialises the TaskManager class.
+     * After initialisation, you must run startupTaskManager() to fetch task history.
+     *
+     * @param thm The initialised TaskHistoryManager
+     * @see TaskHistoryManager
+     */
     public TaskManager(TaskHistoryManager thm) {
         this.taskList = new ArrayList<>();
         this.thm = thm;
@@ -31,9 +38,7 @@ public class TaskManager {
     }
 
     /**
-     * Must be run before usage of task manager.
-     * Initialise the task manager with startup process:
-     * - Fetches task history from disk and insert into taskList
+     * Retrieves task history through the TaskHistoryManager.
      *
      * @return Output string for display
      */

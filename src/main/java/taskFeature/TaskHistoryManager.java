@@ -24,6 +24,11 @@ import java.util.Scanner;
 public class TaskHistoryManager {
     private final File file;
 
+    /**
+     * Initialises the TaskHistoryManager class.
+     *
+     * @param pathDir TaskHistory file will be saved in this directory.
+     */
     public TaskHistoryManager(String pathDir) {
         this.file = new File(pathDir);
     }
@@ -87,7 +92,7 @@ public class TaskHistoryManager {
     }
 
     /**
-     * Retrieve task history from file specified in pathDir.
+     * Retrieves task history from file specified in pathDir.
      * If file not found or invalid format, creates new file instead.
      *
      * @param taskList The taskList provided by the taskFeature.TaskManager for inserting retrieved history

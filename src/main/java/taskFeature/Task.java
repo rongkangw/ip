@@ -12,6 +12,12 @@ public class Task {
     private final String name;
     private boolean isDone;
 
+    /**
+     * Initialises a Task with a name and isDone flag.
+     *
+     * @param name Name of the task
+     * @param isDone Boolean for if the task is done
+     */
     public Task(String name, boolean isDone) {
         this.name = name;
         this.isDone = isDone;

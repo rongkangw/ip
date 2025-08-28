@@ -10,6 +10,13 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     private final LocalDateTime completeBy;
 
+    /**
+     * Initialises a Deadline task with a name, isDone flag and completeBy datetime.
+     *
+     * @param name Name of the deadline task
+     * @param isDone Boolean for if the Deadline task is done
+     * @param completeBy Deadline as a LocalDateTime object
+     */
     public Deadline(String name, boolean isDone, LocalDateTime completeBy) {
         super(name, isDone);
         this.completeBy = completeBy;

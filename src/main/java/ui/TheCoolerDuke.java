@@ -18,6 +18,11 @@ public class TheCoolerDuke {
             HOME_DIR, "src", "main", "data", "TaskHistory.txt"
     ).toString();
 
+    /**
+     * Initialises the chatbot.
+     *
+     * @param scanner Scanner object for handling text input by the user
+     */
     public TheCoolerDuke(Scanner scanner) {
         TaskHistoryManager thm = new TaskHistoryManager(PATH_DIR);
         this.tm = new TaskManager(thm);
@@ -39,8 +44,6 @@ public class TheCoolerDuke {
 
     /**
      * Provides the Task Manager feature for the chatbot.
-     *
-     * @param scanner Scanner object passed for user inputs
      */
     private void taskManagerFeature(Scanner scanner) {
         String outputMessage;
@@ -73,7 +76,7 @@ public class TheCoolerDuke {
     }
 
     /**
-     * Use this method to start the chatbot.
+     * Starts the chatbot.
      */
     public void run() {
         System.out.println(lineBreak);

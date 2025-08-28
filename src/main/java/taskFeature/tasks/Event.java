@@ -11,6 +11,14 @@ public class Event extends Task {
     private final LocalDateTime start;
     private final LocalDateTime end;
 
+    /**
+     * Initialises an Event task with a name, isDone flag, start datetime and end datetime.
+     *
+     * @param name Name of the event
+     * @param isDone Boolean for if the Event task is done
+     * @param start Starting datetime as a LocalDateTime object
+     * @param end Ending datetime as a LocalDateTime object
+     */
     public Event(String name, boolean isDone, LocalDateTime start, LocalDateTime end) {
         super(name, isDone);
         this.start = start;
