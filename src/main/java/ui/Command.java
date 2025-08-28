@@ -24,6 +24,7 @@ public enum Command {
         @Override
         public String execute(String[] modifier, TaskManager tm) {
             try {
+                //result = [taskName]
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{});
                 return tm.addTodoTask(result[0]);
             } catch (InvalidFormatException e) {
@@ -36,6 +37,7 @@ public enum Command {
         @Override
         public String execute(String[] modifier, TaskManager tm) {
             try {
+                //result = [taskName, byDatetime]
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{"/by"});
                 LocalDateTime parsedBy = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
                 return tm.addDeadlineTask(result[0], parsedBy);
@@ -52,6 +54,7 @@ public enum Command {
         @Override
         public String execute(String[] modifier, TaskManager tm) {
             try {
+                //result = [taskName, fromDatetime, toDateTime]
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{"/from", "/to"});
                 LocalDateTime parsedFrom = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
                 LocalDateTime parsedTo = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
@@ -69,6 +72,7 @@ public enum Command {
         @Override
         public String execute(String[] modifier, TaskManager tm) {
             try {
+                //result = [taskIdx]
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.deleteTask(idx);
@@ -85,6 +89,7 @@ public enum Command {
         @Override
         public String execute(String[] modifier, TaskManager tm) {
             try {
+                //result = [taskIdx]
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.markTaskAsDone(idx);
@@ -101,6 +106,7 @@ public enum Command {
         @Override
         public String execute(String[] modifier, TaskManager tm) {
             try {
+                //result = [taskIdx]
                 String[] result = validateAndFormatModifier(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.unmarkTaskAsDone(idx);
@@ -109,6 +115,20 @@ public enum Command {
                 return e.getMessage();
             } catch (NumberFormatException e) {
                 return "that command isn't right: only numbers are allowed!";
+            }
+        }
+    },
+
+    FIND_TASK("find") {
+        @Override
+        public String execute(String[] modifier, TaskManager tm) {
+            try {
+                //result = [taskName]
+                String[] result = validateAndFormatModifier(modifier[0], new String[]{});
+                return tm.findTaskByName(result[0]);
+
+            } catch (InvalidFormatException e) {
+                return e.getMessage();
             }
         }
     };
