@@ -1,5 +1,8 @@
 package exceptions;
 
+/**
+ * An exception that should be triggered when command/file format is incorrect.
+ */
 public class InvalidFormatException extends Exception {
     public InvalidFormatException(String message) {
         super(message);
