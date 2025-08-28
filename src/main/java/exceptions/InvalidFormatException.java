@@ -9,4 +9,4 @@ public class InvalidFormatException extends Exception {
     public String getMessage() {
         return String.format("that command isn't right: %s", super.getMessage());
     }
-}
+}   
