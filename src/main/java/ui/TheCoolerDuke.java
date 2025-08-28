@@ -13,13 +13,12 @@ public class TheCoolerDuke {
     private final String lineBreak = "_".repeat(72);
     private final Scanner scanner;
     private final TaskManager tm;
+    private static final String HOME_DIR = System.getProperty("user.dir");
     private static final String PATH_DIR = Paths.get(
-            "src", "main", "data", "TaskHistory.txt"
+            HOME_DIR, "src", "main", "data", "TaskHistory.txt"
     ).toString();
 
     public TheCoolerDuke(Scanner scanner) {
-
-
         TaskHistoryManager thm = new TaskHistoryManager(PATH_DIR);
         this.tm = new TaskManager(thm);
         this.scanner = scanner;

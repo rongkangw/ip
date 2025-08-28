@@ -1,2 +1,0 @@
-T,1,buy groceries
-E,0,RUNNUS 2025,25 Sept 2025 06:00,25 Sept 2025 10:00

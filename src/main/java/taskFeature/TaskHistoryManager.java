@@ -9,7 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -94,6 +95,7 @@ public class TaskHistoryManager {
      * @throws Error If file unable to be created at pathDir
      */
     public boolean retrieveTaskHistory(ArrayList<Task> taskList) {
+
         try (Scanner s = new Scanner(file)) {
             taskList.clear();
 
@@ -109,10 +111,17 @@ public class TaskHistoryManager {
         } catch (FileNotFoundException | InvalidFormatException e) {
 
             try {
-                //creates a new history file if it does not exist // is invalid format
-                //result added to suppress return
-                boolean result1 = file.delete();
-                boolean result2 = file.createNewFile();
+                //create directories for history file if not exist
+                Files.createDirectories(Path.of(file.getPath()));
+
+                //delete file if is invalid format
+                if (file.exists()) {
+                    boolean result1 = file.delete(); //result added to suppress return
+                }
+
+                //create new history file
+                boolean result2 = file.createNewFile(); //result added to suppress return
+
 
                 return false;
 
