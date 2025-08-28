@@ -108,16 +108,10 @@ public class TaskHistoryManager {
             //else flag as true
             return !taskList.isEmpty();
 
-        } catch (FileNotFoundException | InvalidFormatException e) {
-
+        } catch (FileNotFoundException e) {
             try {
                 //create directories for history file if not exist
                 Files.createDirectories(Path.of(file.getPath()));
-
-                //delete file if is invalid format
-                if (file.exists()) {
-                    boolean result1 = file.delete(); //result added to suppress return
-                }
 
                 //create new history file
                 boolean result2 = file.createNewFile(); //result added to suppress return
@@ -128,6 +122,22 @@ public class TaskHistoryManager {
             } catch (IOException ioe) {
                 throw new Error(ioe.getMessage());
             }
+        } catch (InvalidFormatException e) {
+            try {
+                //delete file if is invalid format
+                if (file.exists()) {
+                    boolean result1 = file.delete(); //result added to suppress return
+                }
+
+                //create new history file
+                boolean result2 = file.createNewFile(); //result added to suppress return
+
+                return false;
+
+            } catch (IOException ioe) {
+                throw new Error(ioe.getMessage());
+            }
+
         }
     }
 
