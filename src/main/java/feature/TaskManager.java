@@ -1,11 +1,11 @@
-package taskFeature;
-
-import taskFeature.tasks.Deadline;
-import taskFeature.tasks.Event;
-import taskFeature.tasks.ToDo;
+package feature;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import feature.tasks.Deadline;
+import feature.tasks.Event;
+import feature.tasks.ToDo;
 
 /**
  * Acts as a list-based task manager.
@@ -26,7 +26,6 @@ public class TaskManager {
         this.taskList = new ArrayList<>();
         this.thm = thm;
     }
-    
     //returns a single task as "X. taskName"
     private String viewTask(int taskIdx) {
         return String.format("%d. %s", taskIdx + 1, taskList.get(taskIdx).showTask());

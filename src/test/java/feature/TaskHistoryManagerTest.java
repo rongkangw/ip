@@ -1,13 +1,16 @@
-package taskFeature;
+package feature;
 
-import org.junit.jupiter.api.Test;
-import taskFeature.tasks.Deadline;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import feature.tasks.Deadline;
 
 public class TaskHistoryManagerTest {
 

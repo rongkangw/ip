@@ -1,6 +1,6 @@
-package taskFeature.tasks;
+package feature.tasks;
 
-import taskFeature.Task;
+import feature.Task;
 
 /**
  * Subclass of taskFeature.Task for clarity in naming.

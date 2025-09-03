@@ -1,23 +1,22 @@
-package ui;
-
-import taskFeature.TaskHistoryManager;
-import taskFeature.TaskManager;
+package main;
 
 import java.nio.file.Paths;
 import java.util.Scanner;
+
+import feature.TaskHistoryManager;
+import feature.TaskManager;
 
 /**
  * A chatbot that helps keep track of your tasks, with persistent storage functionality.
  */
 public class TheCoolerDuke {
-    private final String lineBreak = "_".repeat(72);
-    private final Scanner scanner;
-    private final TaskManager tm;
     private static final String HOME_DIR = System.getProperty("user.dir");
     private static final String PATH_DIR = Paths.get(
             HOME_DIR, "src", "main", "data", "TaskHistory.txt"
     ).toString();
-
+    private final String lineBreak = "_".repeat(72);
+    private final Scanner scanner;
+    private final TaskManager tm;
     /**
      * Initialises the chatbot.
      *
@@ -34,7 +33,7 @@ public class TheCoolerDuke {
         System.out.print("User >>>\n");
 
         //Split all inputs into [command, modifier]
-        return scanner.nextLine().trim().split(" ",2);
+        return scanner.nextLine().trim().split(" ", 2);
     }
 
     private void outputHandler(String msg) {

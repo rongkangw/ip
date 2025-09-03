@@ -1,4 +1,4 @@
-package taskFeature;
+package feature;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,9 +13,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import exceptions.InvalidFormatException;
-import taskFeature.tasks.Deadline;
-import taskFeature.tasks.Event;
-import taskFeature.tasks.ToDo;
+import feature.tasks.Deadline;
+import feature.tasks.Event;
+import feature.tasks.ToDo;
 
 /**
  * Acts as storage manager for managing task history of the TaskManager on the disk.

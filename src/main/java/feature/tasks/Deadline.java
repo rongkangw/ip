@@ -1,8 +1,8 @@
-package taskFeature.tasks;
+package feature.tasks;
 
 import java.time.LocalDateTime;
 
-import taskFeature.Task;
+import feature.Task;
 
 /**
  * Subclass of taskFeature.Task with additional completion time field.

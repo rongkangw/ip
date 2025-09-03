@@ -1,4 +1,4 @@
-package ui;
+package main;
 
 public class TheCoolerDukeTest {
 }

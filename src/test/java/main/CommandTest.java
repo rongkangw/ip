@@ -1,9 +1,9 @@
-package ui;
+package main;
 
+import static main.Command.validateAndFormatModifier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
-import static ui.Command.validateAndFormatModifier;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,14 +20,12 @@ public class CommandTest {
         assertNull(Command.validateCommand("ls"));
     }
 
+    @SuppressWarnings({"checkstyle:Regexp", "checkstyle:SeparatorWrap"})
     @Test
     public void testThrowInvalidFormatExceptionOnInvalidFormat() {
         String modifierString = "test event /by 12/2/2025 18:00";
         String [] acceptedModifiers = new String[]{"/from", "/to"};
-        
         assertThrowsExactly(
-                InvalidFormatException.class,
-                () -> validateAndFormatModifier(modifierString, acceptedModifiers)
-        );
+                InvalidFormatException.class, () -> validateAndFormatModifier(modifierString, acceptedModifiers));
     }
 }
