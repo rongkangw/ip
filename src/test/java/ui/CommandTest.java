@@ -1,10 +1,13 @@
 package ui;
 
-import exceptions.InvalidFormatException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static ui.Command.validateAndFormatModifier;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static ui.Command.validateAndFormatModifier;
+import exceptions.InvalidFormatException;
 
 public class CommandTest {
     @Test
@@ -20,7 +23,7 @@ public class CommandTest {
     @Test
     public void testThrowInvalidFormatExceptionOnInvalidFormat() {
         String modifierString = "test event /by 12/2/2025 18:00";
-        String [] acceptedModifiers = new String[]{"/from","/to"};
+        String [] acceptedModifiers = new String[]{"/from", "/to"};
         
         assertThrowsExactly(
                 InvalidFormatException.class,

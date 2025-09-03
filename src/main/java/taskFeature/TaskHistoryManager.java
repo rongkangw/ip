@@ -1,10 +1,5 @@
 package taskFeature;
 
-import exceptions.InvalidFormatException;
-import taskFeature.tasks.Deadline;
-import taskFeature.tasks.Event;
-import taskFeature.tasks.ToDo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -16,6 +11,11 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import exceptions.InvalidFormatException;
+import taskFeature.tasks.Deadline;
+import taskFeature.tasks.Event;
+import taskFeature.tasks.ToDo;
 
 /**
  * Acts as storage manager for managing task history of the TaskManager on the disk.
@@ -54,40 +54,40 @@ public class TaskHistoryManager {
 
         //3. Check that task type is of valid format (T, D, E) and has correct num of additional params
         return switch (type) {
-            case "T" -> {
-                if (additionalParams.length > 0) {
-                    throw new InvalidFormatException("File has incorrect format: Wrong additional params");
-                }
-                yield new ToDo(name, isDone);
+        case "T" -> {
+            if (additionalParams.length > 0) {
+                throw new InvalidFormatException("File has incorrect format: Wrong additional params");
             }
-            case "D" -> {
-                if (additionalParams.length < 1) {
-                    throw new InvalidFormatException("File has incorrect format: Wrong additional params");
-                }
+            yield new ToDo(name, isDone);
+        }
+        case "D" -> {
+            if (additionalParams.length < 1) {
+                throw new InvalidFormatException("File has incorrect format: Wrong additional params");
+            }
 
-                //check that valid datetime format is provided
-                try {
-                    LocalDateTime parsed = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
-                    yield new Deadline(name, isDone, parsed);
-                } catch (DateTimeParseException e) {
-                    throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
-                }
+            //check that valid datetime format is provided
+            try {
+                LocalDateTime parsed = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
+                yield new Deadline(name, isDone, parsed);
+            } catch (DateTimeParseException e) {
+                throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
             }
-            case "E" -> {
-                if (additionalParams.length < 2) {
-                    throw new InvalidFormatException("File has incorrect format: Wrong additional params");
-                }
+        }
+        case "E" -> {
+            if (additionalParams.length < 2) {
+                throw new InvalidFormatException("File has incorrect format: Wrong additional params");
+            }
 
-                //check that valid datetime format is provided
-                try {
-                    LocalDateTime parsedFrom = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
-                    LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_INPUT_FORMAT);
-                    yield new Event(name, isDone, parsedFrom, parsedTo);
-                } catch (DateTimeParseException e) {
-                    throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
-                }
+            //check that valid datetime format is provided
+            try {
+                LocalDateTime parsedFrom = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
+                LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_INPUT_FORMAT);
+                yield new Event(name, isDone, parsedFrom, parsedTo);
+            } catch (DateTimeParseException e) {
+                throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
             }
-            default -> throw new InvalidFormatException("File has incorrect format: Wrong task type");
+        }
+        default -> throw new InvalidFormatException("File has incorrect format: Wrong task type");
         };
     }
 

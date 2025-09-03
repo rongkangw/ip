@@ -1,11 +1,11 @@
 package ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 import exceptions.InvalidFormatException;
 import taskFeature.Task;
 import taskFeature.TaskManager;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
 /**
  * Provides a set of valid commands to be used when interacting with TheCoolerDuke chatbot.
@@ -181,7 +181,7 @@ public enum Command {
         String[] params = modifier.split(regex, acceptedModifiers.length + 1);
 
         //ensure that none of the parameters are empty, otherwise trim leading and trailing whitespaces as well
-        for (int i = 0; i< params.length; i++) {
+        for (int i = 0; i < params.length; i++) {
             if (params[i].isEmpty()) {
                 throw new InvalidFormatException("one of the parameters is missing!");
             } else {
