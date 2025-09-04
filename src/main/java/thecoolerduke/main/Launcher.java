@@ -1,7 +1,7 @@
-package main;
+package thecoolerduke.main;
 
 import javafx.application.Application;
-import ui.UI;
+import thecoolerduke.ui.UI;
 
 /**
  * A launcher class to workaround classpath issues.

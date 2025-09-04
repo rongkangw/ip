@@ -1,8 +1,8 @@
-package feature.tasks;
+package thecoolerduke.feature.tasks;
 
 import java.time.LocalDateTime;
 
-import feature.Task;
+import thecoolerduke.feature.Task;
 
 /**
  * Subclass of taskFeature.Task with additional start and end date/time field.

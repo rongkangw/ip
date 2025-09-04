@@ -1,13 +1,13 @@
-package main;
+package thecoolerduke.main;
 
-import static main.Command.validateAndFormatModifier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static thecoolerduke.main.Command.validateAndFormatInput;
 
 import org.junit.jupiter.api.Test;
 
-import exceptions.InvalidFormatException;
+import thecoolerduke.exceptions.InvalidFormatException;
 
 public class CommandTest {
     @Test
@@ -20,12 +20,11 @@ public class CommandTest {
         assertNull(Command.validateCommand("ls"));
     }
 
-    @SuppressWarnings({"checkstyle:Regexp", "checkstyle:SeparatorWrap"})
     @Test
     public void testThrowInvalidFormatExceptionOnInvalidFormat() {
         String modifierString = "test event /by 12/2/2025 18:00";
         String [] acceptedModifiers = new String[]{"/from", "/to"};
         assertThrowsExactly(
-                InvalidFormatException.class, () -> validateAndFormatModifier(modifierString, acceptedModifiers));
+                InvalidFormatException.class, () -> validateAndFormatInput(modifierString, acceptedModifiers));
     }
 }

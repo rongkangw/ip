@@ -49,7 +49,7 @@ test {
 }
 
 application {
-    mainClass.set("main.Launcher")
+    mainClass.set("thecoolerduke.main.Launcher")
 }
 
 shadowJar {

@@ -1,6 +1,6 @@
-package feature.tasks;
+package thecoolerduke.feature.tasks;
 
-import feature.Task;
+import thecoolerduke.feature.Task;
 
 /**
  * Subclass of taskFeature.Task for clarity in naming.

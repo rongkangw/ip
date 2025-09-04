@@ -1,10 +1,9 @@
-package main;
+package thecoolerduke.main;
 
 import java.nio.file.Paths;
-import java.util.Scanner;
 
-import feature.TaskHistoryManager;
-import feature.TaskManager;
+import thecoolerduke.feature.TaskHistoryManager;
+import thecoolerduke.feature.TaskManager;
 
 /**
  * A chatbot that helps keep track of your tasks, with persistent storage functionality.

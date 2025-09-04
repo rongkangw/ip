@@ -1,4 +1,4 @@
-package feature;
+package thecoolerduke.feature;
 
 import java.time.format.DateTimeFormatter;
 

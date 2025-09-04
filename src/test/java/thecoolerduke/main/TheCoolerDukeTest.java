@@ -1,4 +1,4 @@
-package main;
+package thecoolerduke.main;
 
 public class TheCoolerDukeTest {
 }

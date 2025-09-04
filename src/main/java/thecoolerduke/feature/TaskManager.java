@@ -1,11 +1,11 @@
-package feature;
+package thecoolerduke.feature;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import feature.tasks.Deadline;
-import feature.tasks.Event;
-import feature.tasks.ToDo;
+import thecoolerduke.feature.tasks.Deadline;
+import thecoolerduke.feature.tasks.Event;
+import thecoolerduke.feature.tasks.ToDo;
 
 /**
  * Acts as a list-based task manager.

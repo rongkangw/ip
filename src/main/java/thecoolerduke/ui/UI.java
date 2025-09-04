@@ -1,4 +1,4 @@
-package ui;
+package thecoolerduke.ui;
 
 import java.io.IOException;
 

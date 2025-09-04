@@ -1,4 +1,4 @@
-package exceptions;
+package thecoolerduke.exceptions;
 
 /**
  * An exception that should be triggered when command/file format is incorrect.

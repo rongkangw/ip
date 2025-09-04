@@ -1,4 +1,4 @@
-package feature;
+package thecoolerduke.feature;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import feature.tasks.Deadline;
+import thecoolerduke.feature.tasks.Deadline;
 
 public class TaskHistoryManagerTest {
 

@@ -1,4 +1,4 @@
-package feature;
+package thecoolerduke.feature;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import exceptions.InvalidFormatException;
-import feature.tasks.Deadline;
-import feature.tasks.Event;
-import feature.tasks.ToDo;
+import thecoolerduke.exceptions.InvalidFormatException;
+import thecoolerduke.feature.tasks.Deadline;
+import thecoolerduke.feature.tasks.Event;
+import thecoolerduke.feature.tasks.ToDo;
 
 /**
  * Acts as storage manager for managing task history of the TaskManager on the disk.

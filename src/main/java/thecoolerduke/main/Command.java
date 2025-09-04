@@ -1,11 +1,11 @@
-package main;
+package thecoolerduke.main;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-import exceptions.InvalidFormatException;
-import feature.Task;
-import feature.TaskManager;
+import thecoolerduke.exceptions.InvalidFormatException;
+import thecoolerduke.feature.Task;
+import thecoolerduke.feature.TaskManager;
 
 /**
  * Provides a set of valid commands to be used when interacting with TheCoolerDuke chatbot.
