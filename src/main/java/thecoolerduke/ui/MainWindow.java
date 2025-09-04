@@ -26,22 +26,30 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-//    private Duke duke;
+    private TheCoolerDuke bot;
 
     private Image userImage = new Image(
             Objects.requireNonNull(this.getClass().getResourceAsStream("/images/User.png")));
     private Image botImage = new Image(
             Objects.requireNonNull(this.getClass().getResourceAsStream("/images/Bot.png")));
 
+
+    /**
+     * Initialises the bot with its startup sequence.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-//    /** Injects the Duke instance */
-//    public void setDuke(Duke d) {
-//        duke = d;
-//    }
+    // Injects the Bot instance
+    public void setBot(TheCoolerDuke d) {
+        bot = d;
+
+        dialogContainer.getChildren().addAll(
+                DialogBox.getBotDialog(bot.run(), botImage)
+        );
+    }
 
     /**
      * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
@@ -50,10 +58,20 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = "theCoolerDuke said: " + input;
+
+        String response = bot.processResponse(input);
+
+        /*
+        Closes application upon seeing "bye" command.
+        See note in TheCoolerDuke.processResponse() for more information.
+         */
+        if (input.equals("bye")) {
+            Platform.exit();
+        }
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, botImage)
+                DialogBox.getBotDialog(response, botImage)
         );
         userInput.clear();
     }

@@ -116,11 +116,11 @@ public class TaskHistoryManager {
         } catch (FileNotFoundException e) {
             try {
                 //create directories for history file if not exist
-                Files.createDirectories(Path.of(file.getPath()));
+
+                Files.createDirectories(Path.of(file.getPath()).getParent());
 
                 //create new history file
                 boolean result2 = file.createNewFile(); //result added to suppress return
-
 
                 return false;
 
@@ -159,6 +159,7 @@ public class TaskHistoryManager {
             }
 
         } catch (IOException e) {
+
             throw new Error("Unable to write to File");
         }
     }

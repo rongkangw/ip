@@ -25,7 +25,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName]
-                String[] result = validateAndFormatModifier(modifier[0], new String[]{});
+                String[] result = validateAndFormatInput(modifier[0], new String[]{});
                 return tm.addTodoTask(result[0]);
             } catch (InvalidFormatException e) {
                 return e.getMessage();
@@ -38,7 +38,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName, byDatetime]
-                String[] result = validateAndFormatModifier(modifier[0], new String[]{"/by"});
+                String[] result = validateAndFormatInput(modifier[0], new String[]{"/by"});
                 LocalDateTime parsedBy = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
                 return tm.addDeadlineTask(result[0], parsedBy);
 
@@ -55,7 +55,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName, fromDatetime, toDateTime]
-                String[] result = validateAndFormatModifier(modifier[0], new String[]{"/from", "/to"});
+                String[] result = validateAndFormatInput(modifier[0], new String[]{"/from", "/to"});
                 LocalDateTime parsedFrom = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
                 LocalDateTime parsedTo = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
                 return tm.addEventTask(result[0], parsedFrom, parsedTo);
@@ -73,7 +73,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskIdx]
-                String[] result = validateAndFormatModifier(modifier[0], new String[]{});
+                String[] result = validateAndFormatInput(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.deleteTask(idx);
 
@@ -90,7 +90,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskIdx]
-                String[] result = validateAndFormatModifier(modifier[0], new String[]{});
+                String[] result = validateAndFormatInput(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.markTaskAsDone(idx);
 
@@ -107,7 +107,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskIdx]
-                String[] result = validateAndFormatModifier(modifier[0], new String[]{});
+                String[] result = validateAndFormatInput(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.unmarkTaskAsDone(idx);
 
@@ -124,7 +124,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName]
-                String[] result = validateAndFormatModifier(modifier[0], new String[]{});
+                String[] result = validateAndFormatInput(modifier[0], new String[]{});
                 return tm.findTaskByName(result[0]);
 
             } catch (InvalidFormatException e) {
@@ -157,16 +157,22 @@ public enum Command {
         return null;
     }
 
-    //checks modifier is of correct format based on provided acceptedModifiers
-    //returns the separated String[] version of the modifier if valid
-    protected static String[] validateAndFormatModifier(
-            String modifier, String[] acceptedModifiers
+    /**
+     * Checks that the input is of correct format based on provided acceptedModifiers.
+     *
+     * @param input The input string to be validated and/or modified
+     * @param acceptedModifiers The list of accepted modifiers to compare and format the input string with.
+     * @return A list of string values based on the input, separated by the accepted modifiers
+     * @throws InvalidFormatException Throws exception if the format of the input is invalid.
+     */
+    public static String[] validateAndFormatInput(
+            String input, String[] acceptedModifiers
     ) throws InvalidFormatException {
 
         //check that modifier contains the accepted modifiers provided
         StringBuilder missing = new StringBuilder();
         for (String accepted: acceptedModifiers) {
-            if (!modifier.contains(accepted)) {
+            if (!input.contains(accepted)) {
                 missing.append(" ").append(accepted);
             }
         }
@@ -178,7 +184,7 @@ public enum Command {
 
         //format the modifier into its parameters with the accepted modifiers as separators
         String regex = String.join("|", acceptedModifiers);
-        String[] params = modifier.split(regex, acceptedModifiers.length + 1);
+        String[] params = input.split(regex, acceptedModifiers.length + 1);
 
         //ensure that none of the parameters are empty, otherwise trim leading and trailing whitespaces as well
         for (int i = 0; i < params.length; i++) {

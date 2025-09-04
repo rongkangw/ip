@@ -11,84 +11,62 @@ import thecoolerduke.feature.TaskManager;
 public class TheCoolerDuke {
     private static final String HOME_DIR = System.getProperty("user.dir");
     private static final String PATH_DIR = Paths.get(
-            HOME_DIR, "src", "main", "data", "TaskHistory.txt"
+            HOME_DIR, "src", "data", "TaskHistory.txt"
     ).toString();
-    private final String lineBreak = "_".repeat(72);
-    private final Scanner scanner;
     private final TaskManager tm;
     /**
      * Initialises the chatbot.
      *
-     * @param scanner Scanner object for handling text input by the user
      */
-    public TheCoolerDuke(Scanner scanner) {
+    public TheCoolerDuke() {
         TaskHistoryManager thm = new TaskHistoryManager(PATH_DIR);
         this.tm = new TaskManager(thm);
-        this.scanner = scanner;
     }
 
-    private String[] inputHandler(Scanner scanner) {
-        System.out.println(lineBreak);
-        System.out.print("User >>>\n");
-
+    private String[] inputHandler(String msg) {
         //Split all inputs into [command, modifier]
-        return scanner.nextLine().trim().split(" ", 2);
-    }
-
-    private void outputHandler(String msg) {
-        System.out.println(lineBreak);
-        System.out.println("Bot >>>\n" + msg);
+        return msg.trim().split(" ", 2);
     }
 
     /**
      * Provides the Task Manager feature for the chatbot.
+     *
+     * @param inputMessage Input string for bot to process.
+     * @return An output string for display.
      */
-    private void taskManagerFeature(Scanner scanner) {
-        String outputMessage;
-
-        //Startup task manager and display output message
-        outputHandler(tm.startupTaskManager());
-
+    public String processResponse(String inputMessage) {
         //Split input into command and modifier
-        String[] input = inputHandler(scanner);
+        String[] input = inputHandler(inputMessage);
         String command = input[0];
         String modifier = input.length > 1 ? input[1] : "";
 
-        while (!command.equals("bye")) {
+        /*
+        Note: bye command is listed here but the outputMessage will not be displayed.
+        Instead, the JavaFX application will close without a reply from the bot.
+        This is a temporary workaround until I can get Thread.sleep() to work with JavaFX.
+         */
+        if (!command.equals("bye")) {
             Command result = Command.validateCommand(command);
 
             if (result == null) {
                 //command not recognised
-                outputMessage = "What do you mean? Please try again...";
+                return "What do you mean? Please try again...";
             } else {
                 //valid command, execute
-                outputMessage = result.execute(new String[]{modifier}, tm);
+                return result.execute(new String[]{modifier}, tm);
             }
-
-            //display the output and gather new input
-            outputHandler(outputMessage);
-            input = inputHandler(scanner);
-            command = input[0];
-            modifier = input.length > 1 ? input[1] : "";
+        } else {
+            return "Alright, I guess you're done :(\nGoodbye!";
         }
     }
 
     /**
-     * Starts the chatbot.
+     * Runs the initial startup sequence of the chatbot.
+     *
+     * @return Startup output string for display.
      */
-    public void run() {
-        System.out.println(lineBreak);
-        System.out.println("Hello! I'm TheCoolerDuke");
-        System.out.println("What can I do for you?");
-
-        taskManagerFeature(scanner);
-
-        System.out.println(lineBreak);
-        System.out.println("Alright, I guess you're done :(\nGoodbye!");
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        new TheCoolerDuke(scanner).run();
+    public String run() {
+        //Startup task manager and display output message
+        return "Hello! I'm TheCoolerDuke\nWhat can I do for you?" + "\n\n" + tm.startupTaskManager();
     }
 }
