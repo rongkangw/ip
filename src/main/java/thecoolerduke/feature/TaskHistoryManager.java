@@ -16,6 +16,7 @@ import thecoolerduke.exceptions.InvalidFormatException;
 import thecoolerduke.feature.tasks.Deadline;
 import thecoolerduke.feature.tasks.Event;
 import thecoolerduke.feature.tasks.ToDo;
+import thecoolerduke.main.Priority;
 
 /**
  * Acts as storage manager for managing task history of the TaskManager on the disk.
@@ -43,8 +44,8 @@ public class TaskHistoryManager {
 
         String[] taskInfo = line.split(",");
 
-        //2. Check that lines have at least 3 params and isDone is of valid format (0 or 1)
-        if (taskInfo.length < 3 || !taskInfo[1].matches("^[01]$")) {
+        //2. Check that lines have at least 4 params and isDone is of valid format (0 or 1)
+        if (taskInfo.length < 4 || !taskInfo[1].matches("^[01]$")) {
             throw new InvalidFormatException("File has incorrect format: Wrong number of task params");
         }
 
@@ -59,13 +60,17 @@ public class TaskHistoryManager {
         }
     }
 
+    private Priority parsePriorityLevel(String input) throws InvalidFormatException {
+        return Priority.fromString(input);
+    }
+
     //separates all additional parameters from type, isDone and name
     //throws InvalidFormatException if incorrect number of additional parameters
     private String[] parseAdditionalParams(String[] taskInfo, int length) throws InvalidFormatException {
-        String[] additionalParams = Arrays.copyOfRange(taskInfo, 3, taskInfo.length);
+        String[] additionalParams = Arrays.copyOfRange(taskInfo, 4, taskInfo.length);
 
         if (additionalParams.length != length) {
-            throw new InvalidFormatException("File has incorrect format: Wrong additional params");
+            throw new InvalidFormatException("File has incorrect format: Incorrect additional params");
         }
 
         return additionalParams;
@@ -79,26 +84,27 @@ public class TaskHistoryManager {
         String type = taskInfo[0];
         boolean isDone = taskInfo[1].equals("1");
         String name = taskInfo[2];
+        Priority priority = parsePriorityLevel(taskInfo[3]);
+
         String[] additionalParams;
 
         //Check that task type is of valid format (T, D, E) and has correct num of additional params
         return switch (type) {
         case "T" -> {
-            additionalParams = parseAdditionalParams(taskInfo, 0);
-            yield new ToDo(name, isDone);
+            yield new ToDo(name, isDone, priority);
         }
         case "D" -> {
             additionalParams = parseAdditionalParams(taskInfo, 1);
-
+            
             LocalDateTime parsedBy = parseDatetimeInput(additionalParams[0]);
-            yield new Deadline(name, isDone, parsedBy);
+            yield new Deadline(name, isDone, priority, parsedBy);
         }
         case "E" -> {
             additionalParams = parseAdditionalParams(taskInfo, 2);
 
             LocalDateTime parsedFrom = parseDatetimeInput(additionalParams[0]);
             LocalDateTime parsedTo = parseDatetimeInput(additionalParams[1]);
-            yield new Event(name, isDone, parsedFrom, parsedTo);
+            yield new Event(name, isDone, priority, parsedFrom, parsedTo);
         }
         default -> throw new InvalidFormatException("File has incorrect format: Wrong task type");
         };
@@ -143,6 +149,7 @@ public class TaskHistoryManager {
                 throw new Error(ioe.getMessage());
             }
         } catch (InvalidFormatException e) {
+            System.out.println(e.getMessage());
             try {
                 //delete file if is invalid format
                 if (file.exists()) {

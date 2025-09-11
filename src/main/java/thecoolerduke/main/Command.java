@@ -25,8 +25,9 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName]
-                String[] result = validateAndFormatInput(modifier[0], new String[]{});
-                return tm.addTodoTask(result[0]);
+                String[] result = parseInput(modifier[0], new String[]{"/p"});
+                Priority p = Priority.fromString(result[1]);
+                return tm.addTodoTask(result[0], p);
             } catch (InvalidFormatException e) {
                 return e.getMessage();
             }
@@ -38,9 +39,10 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName, byDatetime]
-                String[] result = validateAndFormatInput(modifier[0], new String[]{"/by"});
-                LocalDateTime parsedBy = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
-                return tm.addDeadlineTask(result[0], parsedBy);
+                String[] result = parseInput(modifier[0], new String[]{"/p", "/by"});
+                Priority p = Priority.fromString(result[1]);
+                LocalDateTime parsedBy = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
+                return tm.addDeadlineTask(result[0], p, parsedBy);
 
             } catch (InvalidFormatException e) {
                 return e.getMessage();
@@ -55,10 +57,11 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName, fromDatetime, toDateTime]
-                String[] result = validateAndFormatInput(modifier[0], new String[]{"/from", "/to"});
-                LocalDateTime parsedFrom = LocalDateTime.parse(result[1], Task.DATETIME_INPUT_FORMAT);
-                LocalDateTime parsedTo = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
-                return tm.addEventTask(result[0], parsedFrom, parsedTo);
+                String[] result = parseInput(modifier[0], new String[]{"/p", "/from", "/to"});
+                Priority p = Priority.fromString(result[1]);
+                LocalDateTime parsedFrom = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
+                LocalDateTime parsedTo = LocalDateTime.parse(result[3], Task.DATETIME_INPUT_FORMAT);
+                return tm.addEventTask(result[0], p, parsedFrom, parsedTo);
 
             } catch (InvalidFormatException e) {
                 return e.getMessage();
@@ -73,7 +76,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskIdx]
-                String[] result = validateAndFormatInput(modifier[0], new String[]{});
+                String[] result = parseInput(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.deleteTask(idx);
 
@@ -90,7 +93,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskIdx]
-                String[] result = validateAndFormatInput(modifier[0], new String[]{});
+                String[] result = parseInput(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.markTaskAsDone(idx);
 
@@ -107,7 +110,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskIdx]
-                String[] result = validateAndFormatInput(modifier[0], new String[]{});
+                String[] result = parseInput(modifier[0], new String[]{});
                 int idx = Integer.parseInt(result[0]);
                 return tm.unmarkTaskAsDone(idx);
 
@@ -124,7 +127,7 @@ public enum Command {
         public String execute(String[] modifier, TaskManager tm) {
             try {
                 //result = [taskName]
-                String[] result = validateAndFormatInput(modifier[0], new String[]{});
+                String[] result = parseInput(modifier[0], new String[]{});
                 return tm.findTaskByName(result[0]);
 
             } catch (InvalidFormatException e) {
@@ -165,7 +168,7 @@ public enum Command {
      * @return A list of string values based on the input, separated by the accepted modifiers
      * @throws InvalidFormatException Throws exception if the format of the input is invalid.
      */
-    public static String[] validateAndFormatInput(
+    public static String[] parseInput(
             String input, String[] acceptedModifiers
     ) throws InvalidFormatException {
 
@@ -179,7 +182,7 @@ public enum Command {
 
         //throw if any missing modifiers
         if (!missing.isEmpty()) {
-            throw new InvalidFormatException(String.format("missing the modifier(s):%s!", missing));
+            throw new InvalidFormatException(String.format("Missing the modifier(s):%s!", missing));
         }
 
         //format the modifier into its parameters with the accepted modifiers as separators
@@ -189,7 +192,7 @@ public enum Command {
         //ensure that none of the parameters are empty, otherwise trim leading and trailing whitespaces as well
         for (int i = 0; i < params.length; i++) {
             if (params[i].isEmpty()) {
-                throw new InvalidFormatException("one of the parameters is missing!");
+                throw new InvalidFormatException("One of the parameters is missing!");
             } else {
                 params[i] = params[i].trim();
             }

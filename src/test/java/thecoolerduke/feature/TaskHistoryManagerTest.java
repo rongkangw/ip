@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import thecoolerduke.feature.tasks.Deadline;
+import thecoolerduke.main.Priority;
 
 public class TaskHistoryManagerTest {
 
@@ -36,7 +37,7 @@ public class TaskHistoryManagerTest {
         //initialise array of 1 task
         ArrayList<Task> taskList = new ArrayList<>();
         LocalDateTime date = LocalDateTime.parse("2007-12-03T10:15:30");
-        taskList.add(new Deadline("getFood", false, date));
+        taskList.add(new Deadline("getFood", false, Priority.MEDIUM, date));
 
         //ensure history updated without error
         assertDoesNotThrow(() -> thm.updateHistory(taskList));
