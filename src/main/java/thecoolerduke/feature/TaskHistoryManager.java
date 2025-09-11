@@ -33,7 +33,9 @@ public class TaskHistoryManager {
         this.file = new File(pathDir);
     }
 
-    private Task getTaskFromLine(String line) throws InvalidFormatException {
+    //separates each line of data into comma-separated parameters
+    //throws InvalidFormatException if wrong string format or number of parameters
+    private String[] parseLine(String line) throws InvalidFormatException {
         //1. Initial check for all lines to have commas
         if (!line.contains(",")) {
             throw new InvalidFormatException("File has incorrect format: \",\" missing");
@@ -46,46 +48,57 @@ public class TaskHistoryManager {
             throw new InvalidFormatException("File has incorrect format: Wrong number of task params");
         }
 
+        return taskInfo;
+    }
+
+    private LocalDateTime parseDatetimeInput(String datetimeString) throws InvalidFormatException {
+        try {
+            return LocalDateTime.parse(datetimeString, Task.DATETIME_INPUT_FORMAT);
+        } catch (DateTimeParseException e) {
+            throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
+        }
+    }
+
+    //separates all additional parameters from type, isDone and name
+    //throws InvalidFormatException if incorrect number of additional parameters
+    private String[] parseAdditionalParams(String[] taskInfo, int length) throws InvalidFormatException {
+        String[] additionalParams = Arrays.copyOfRange(taskInfo, 3, taskInfo.length);
+
+        if (additionalParams.length != length) {
+            throw new InvalidFormatException("File has incorrect format: Wrong additional params");
+        }
+
+        return additionalParams;
+    }
+
+    private Task getTaskFromLine(String line) throws InvalidFormatException {
+        //Check that line is of correct string format
+        //split into comma separated sections if valid
+        String[] taskInfo = parseLine(line);
+
         String type = taskInfo[0];
         boolean isDone = taskInfo[1].equals("1");
         String name = taskInfo[2];
+        String[] additionalParams;
 
-        String[] additionalParams = Arrays.copyOfRange(taskInfo, 3, taskInfo.length);
-
-        //3. Check that task type is of valid format (T, D, E) and has correct num of additional params
+        //Check that task type is of valid format (T, D, E) and has correct num of additional params
         return switch (type) {
         case "T" -> {
-            if (additionalParams.length > 0) {
-                throw new InvalidFormatException("File has incorrect format: Wrong additional params");
-            }
+            additionalParams = parseAdditionalParams(taskInfo, 0);
             yield new ToDo(name, isDone);
         }
         case "D" -> {
-            if (additionalParams.length < 1) {
-                throw new InvalidFormatException("File has incorrect format: Wrong additional params");
-            }
+            additionalParams = parseAdditionalParams(taskInfo, 1);
 
-            //check that valid datetime format is provided
-            try {
-                LocalDateTime parsed = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
-                yield new Deadline(name, isDone, parsed);
-            } catch (DateTimeParseException e) {
-                throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
-            }
+            LocalDateTime parsedBy = parseDatetimeInput(additionalParams[0]);
+            yield new Deadline(name, isDone, parsedBy);
         }
         case "E" -> {
-            if (additionalParams.length < 2) {
-                throw new InvalidFormatException("File has incorrect format: Wrong additional params");
-            }
+            additionalParams = parseAdditionalParams(taskInfo, 2);
 
-            //check that valid datetime format is provided
-            try {
-                LocalDateTime parsedFrom = LocalDateTime.parse(additionalParams[0], Task.DATETIME_INPUT_FORMAT);
-                LocalDateTime parsedTo = LocalDateTime.parse(additionalParams[1], Task.DATETIME_INPUT_FORMAT);
-                yield new Event(name, isDone, parsedFrom, parsedTo);
-            } catch (DateTimeParseException e) {
-                throw new InvalidFormatException("File has incorrect format: Wrong datetime format");
-            }
+            LocalDateTime parsedFrom = parseDatetimeInput(additionalParams[0]);
+            LocalDateTime parsedTo = parseDatetimeInput(additionalParams[1]);
+            yield new Event(name, isDone, parsedFrom, parsedTo);
         }
         default -> throw new InvalidFormatException("File has incorrect format: Wrong task type");
         };

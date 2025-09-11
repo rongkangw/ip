@@ -28,6 +28,10 @@ public class TheCoolerDuke {
         return msg.trim().split(" ", 2);
     }
 
+    private String displayBotIntroduction() {
+        return String.format("Hello! I'm TheCoolerDuke\nWhat can I do for you?\n\n%s", tm.startupTaskManager());
+    }
+
     /**
      * Provides the Task Manager feature for the chatbot.
      *
@@ -67,6 +71,6 @@ public class TheCoolerDuke {
      */
     public String run() {
         //Startup task manager and display output message
-        return "Hello! I'm TheCoolerDuke\nWhat can I do for you?" + "\n\n" + tm.startupTaskManager();
+        return displayBotIntroduction();
     }
 }
