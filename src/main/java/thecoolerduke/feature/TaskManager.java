@@ -56,6 +56,7 @@ public class TaskManager {
      * Creates a new ToDo task and adds to the task list.
      *
      * @param task Name of the task
+     * @param priority Priority enum of the task
      * @return Output string for display
      */
     public String addTodoTask(String task, Priority priority) {
@@ -74,6 +75,7 @@ public class TaskManager {
      * Creates a new Deadline task and adds to the task list.
      *
      * @param task Name of the task
+     * @param priority Priority enum of the task
      * @param completeBy Completion date/time of the task as String
      * @return Output string for display
      */
@@ -95,6 +97,7 @@ public class TaskManager {
      * @param task Name of the task
      * @param start Start date/time of the task as String
      * @param end End date/time of the task as String
+     * @param priority Priority enum of the task
      * @return Output string for display
      */
     public String addEventTask(String task, Priority priority, LocalDateTime start, LocalDateTime end) {

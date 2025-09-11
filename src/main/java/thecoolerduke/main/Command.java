@@ -182,7 +182,7 @@ public enum Command {
 
         //throw if any missing modifiers
         if (!missing.isEmpty()) {
-            throw new InvalidFormatException(String.format("missing the modifier(s):%s!", missing));
+            throw new InvalidFormatException(String.format("Missing the modifier(s):%s!", missing));
         }
 
         //format the modifier into its parameters with the accepted modifiers as separators
@@ -192,7 +192,7 @@ public enum Command {
         //ensure that none of the parameters are empty, otherwise trim leading and trailing whitespaces as well
         for (int i = 0; i < params.length; i++) {
             if (params[i].isEmpty()) {
-                throw new InvalidFormatException("one of the parameters is missing!");
+                throw new InvalidFormatException("One of the parameters is missing!");
             } else {
                 params[i] = params[i].trim();
             }

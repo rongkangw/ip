@@ -95,7 +95,7 @@ public class TaskHistoryManager {
         }
         case "D" -> {
             additionalParams = parseAdditionalParams(taskInfo, 1);
-            System.out.println(additionalParams.length);
+            
             LocalDateTime parsedBy = parseDatetimeInput(additionalParams[0]);
             yield new Deadline(name, isDone, priority, parsedBy);
         }
