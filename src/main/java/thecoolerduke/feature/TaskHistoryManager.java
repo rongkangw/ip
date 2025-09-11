@@ -120,7 +120,9 @@ public class TaskHistoryManager {
                 Files.createDirectories(Path.of(file.getPath()).getParent());
 
                 //create new history file
-                boolean result2 = file.createNewFile(); //result added to suppress return
+                boolean createFileResult = file.createNewFile(); //result added to suppress return
+
+                assert createFileResult : "A new history file should be created.";
 
                 return false;
 
@@ -131,11 +133,17 @@ public class TaskHistoryManager {
             try {
                 //delete file if is invalid format
                 if (file.exists()) {
-                    boolean result1 = file.delete(); //result added to suppress return
+                    boolean deleteFileResult = file.delete(); //result added to suppress return
+
+                    assert deleteFileResult : "Invalid history file should be deleted.";
                 }
 
+
+
                 //create new history file
-                boolean result2 = file.createNewFile(); //result added to suppress return
+                boolean createFileResult = file.createNewFile(); //result added to suppress return
+
+                assert createFileResult : "A new history file should be created.";
 
                 return false;
 
