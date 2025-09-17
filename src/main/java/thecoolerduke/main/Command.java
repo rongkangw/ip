@@ -191,10 +191,10 @@ public enum Command {
 
         //ensure that none of the parameters are empty, otherwise trim leading and trailing whitespaces as well
         for (int i = 0; i < params.length; i++) {
+            params[i] = params[i].trim();
+
             if (params[i].isEmpty()) {
                 throw new InvalidFormatException("One of the parameters is missing!");
-            } else {
-                params[i] = params[i].trim();
             }
         }
         return params;
