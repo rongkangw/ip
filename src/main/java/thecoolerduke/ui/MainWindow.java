@@ -28,9 +28,9 @@ public class MainWindow extends AnchorPane {
 
     private TheCoolerDuke bot;
 
-    private Image userImage = new Image(
+    private final Image userImage = new Image(
             Objects.requireNonNull(this.getClass().getResourceAsStream("/images/User.png")));
-    private Image botImage = new Image(
+    private final Image botImage = new Image(
             Objects.requireNonNull(this.getClass().getResourceAsStream("/images/Bot.png")));
 
 
