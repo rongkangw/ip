@@ -95,13 +95,11 @@ public class TaskHistoryManager {
         }
         case "D" -> {
             additionalParams = parseAdditionalParams(taskInfo, 1);
-            
             LocalDateTime parsedBy = parseDatetimeInput(additionalParams[0]);
             yield new Deadline(name, isDone, priority, parsedBy);
         }
         case "E" -> {
             additionalParams = parseAdditionalParams(taskInfo, 2);
-
             LocalDateTime parsedFrom = parseDatetimeInput(additionalParams[0]);
             LocalDateTime parsedTo = parseDatetimeInput(additionalParams[1]);
             yield new Event(name, isDone, priority, parsedFrom, parsedTo);

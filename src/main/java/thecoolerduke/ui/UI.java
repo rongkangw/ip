@@ -1,6 +1,5 @@
 package thecoolerduke.ui;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 

@@ -80,7 +80,6 @@ public class CommandTest {
     public void testEmptyParameterAfterModifier() {
         String modifierString = "finish project /p /by 12/09/2025 18:00";
         String [] acceptedModifiers = new String[]{"/p", "/by"};
-        assertThrowsExactly(InvalidFormatException.class,
-                () -> parseInput(modifierString, acceptedModifiers));
+        assertThrowsExactly(InvalidFormatException.class, () -> parseInput(modifierString, acceptedModifiers));
     }
 }
