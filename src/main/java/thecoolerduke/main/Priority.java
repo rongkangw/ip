@@ -37,7 +37,7 @@ public enum Priority {
     }
 
     /**
-     *  Map integer input to Priority enum
+     * Maps integer input to Priority enum
      */
     public static Priority fromString(String level) throws InvalidFormatException {
         try {
