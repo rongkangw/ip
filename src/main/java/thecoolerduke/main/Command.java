@@ -134,6 +134,39 @@ public enum Command {
                 return e.getMessage();
             }
         }
+    },
+
+    HELP("help") {
+        @Override
+        public String execute(String[] modifier, TaskManager tm) {
+            try {
+                String result = parseHelpInput(modifier[0]);
+
+                if (result.isEmpty()) { //case 1: only "help" is inputted
+                    // return all commands separated by newlines
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("No problem! Here's the list of commands!\n"
+                            + "Also try \"help {command}\" to see a specific command!\n\n");
+
+                    for (CommandInfo info : CommandInfo.values()) {
+                        sb.append(info.getHelpText()).append("\n\n");
+                    }
+                    return sb.toString().trim(); // remove trailing newline
+
+                } else { // case 1: "help {keyword}" is inputted
+                    // find command matching the keyword
+                    CommandInfo info = CommandInfo.fromKeyword(result);
+                    if (info != null) {
+                        return info.getHelpText();
+                    } else {
+                        throw new InvalidFormatException("No such command found in the list of commands!");
+                    }
+                }
+
+            } catch (InvalidFormatException e) {
+                return e.getMessage();
+            }
+        }
     };
 
     private final String keyword;
@@ -198,6 +231,16 @@ public enum Command {
             }
         }
         return params;
+    }
+
+    /**
+     * Parses inputs for the help command specifically.
+     *
+     * @param input The input string to be validated and/or modified
+     * @return The parsed command String
+     */
+    public static String parseHelpInput(String input) {
+        return input.trim();
     }
 }
 
