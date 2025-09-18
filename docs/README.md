@@ -144,6 +144,51 @@ You now have 0 tasks in this list.
 The task at this index does not exist!
 ```
 
+## Finding Tasks
+**Command:** `find {NAME}`
+
+**Example:** `find groceries`
+
+All tasks with task names containing `"groceries"` will be displayed.
+
+**Expected Output:**
+- If any task has name containing `"groceries"` exists in the list
+```
+Here are the tasks I found:
+    1. [T] (LOW) [X] Buy Groceries
+```
+- If no tasks have name containing `"groceries"/the list is empty
+```
+No tasks found!
+```
+
+## Getting Help
+**Command:** `help` or `help {COMMAND}`
+
+**Example:** `help`, `help delete`, `help deadline`
+
+Displays a brief description of the command and example usage.
+If only `help` is inputted, all commands are displayed.
+
+**Expected Output:**
+- For all commands
+```
+No problem! Here's the list of commands!
+Also try "help {command} to see a specific command!
+
+Shows all tasks currently in your list.
+Format: list
+...
+...
+... (continued)
+```
+- For a specific command (eg. `help delete`)
+```
+Deletes a task from the list by its index.
+Format: delete INDEX
+```
+
+
 ## Saving Data
 Task data is automatically saved in the hard disk after every command is run. There is no need to save manually.
 
