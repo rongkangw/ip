@@ -32,7 +32,7 @@ public class UI extends Application {
             //Sets app title
             stage.setTitle("TheCoolerDuke");
 
-            //Adds app icon
+            //Sets app icon
             stage.getIcons().add(iconImage);
 
             stage.show();

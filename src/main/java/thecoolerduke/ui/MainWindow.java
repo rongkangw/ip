@@ -33,7 +33,6 @@ public class MainWindow extends AnchorPane {
     private final Image botImage = new Image(
             Objects.requireNonNull(this.getClass().getResourceAsStream("/images/Bot.png")));
 
-
     /**
      * Initialises the bot with its startup sequence.
      */
