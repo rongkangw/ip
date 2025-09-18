@@ -5,7 +5,7 @@
 # What is it?
 Imagine the usual Duke bot, but better. Need I say more?
 
-- [Quick Start]()
+- [Quick Start](#quick-start)
 - [Features](#features)
   - [Adding Tasks](#adding-tasks)
     - [General Template](#general-template)
@@ -14,20 +14,24 @@ Imagine the usual Duke bot, but better. Need I say more?
     - [Events](#adding-events)
   - [Marking Tasks](#marking-tasks)
   - [Unmarking Tasks](#unmarking-tasks)
+  - [Saving Data](#saving-data)
+  - [Deleting Tasks](#deleting-tasks)
+  - [Editing the Data File](#editing-the-data-file)
 ---
-# Quick start
+# Quick Start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
-
-2. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/rongkangw/ip/releases).
 ---
 
 # Features
 
-> [!TIP]
-> For commands using dates (in the format `DD/MM/YYYY HH:MM`), the leading digit for `DD` and `MM` can be omitted.
-> Eg. `3/2/2025 15:00` is still valid, and translates to `3 Feb 2025 15:00`
+<div markdown="block" class="alert alert-info">
+**:information_source: Info regarding parsing Dates and Times:**<br>
+For commands using dates (in the format `DD/MM/YYYY HH:MM`), the leading digit for `DD` and `MM` can be omitted.
+Eg. `3/2/2025 15:00` is still valid, and translates to `3 Feb 2025 15:00`
+</div>
 
 ## Adding Tasks
 There are 3 types of tasks that you can track: Todos, Deadlines and Events
@@ -148,9 +152,10 @@ All task data is stored in the `TaskHistory.txt` file.
 This file is located in `[JAR  File Location]/src/data/TaskHistory.txt`
 Advanced users are welcome to update their task data directly from the file!
 
-> [!WARNING] 
-> If your changes to the data file makes its format invalid,  **All data in the data file will be discarded** and replaced
-> with an empty data file at the next run. Hence, it is recommended to make a backup of the file before editing it.
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+If your changes to the data file makes its format invalid,  **All data in the data file will be discarded** and replaced
+with an empty data file at the next run. Hence, it is recommended to make a backup of the file before editing it.
 Furthermore, certain edits can cause the app to behave in unexpected ways 
-> (e.g., if a value entered is outside the acceptable range). 
-> Therefore, **edit the data file only if you are confident that you can update it correctly.**
+(e.g., if a value entered is outside the acceptable range). 
+Therefore, **edit the data file only if you are confident that you can update it correctly.**
+</div>
