@@ -30,7 +30,10 @@ public class TheCoolerDuke {
     }
 
     private String displayBotIntroduction() {
-        return String.format("Hello! I'm TheCoolerDuke\nWhat can I do for you?\n\n%s", tm.startupTaskManager());
+        return String.format("Hello! I'm TheCoolerDuke\nWhat can I do for you?\n\n%s\n\n%s",
+                tm.startupTaskManager(),
+                "PS: Use the \"help\" command to check out what you can do :)"
+        );
     }
 
     /**

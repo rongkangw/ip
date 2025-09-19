@@ -61,6 +61,11 @@ public enum Command {
                 Priority p = Priority.fromString(result[1]);
                 LocalDateTime parsedFrom = LocalDateTime.parse(result[2], Task.DATETIME_INPUT_FORMAT);
                 LocalDateTime parsedTo = LocalDateTime.parse(result[3], Task.DATETIME_INPUT_FORMAT);
+
+                if (!parsedTo.isAfter(parsedFrom)) {
+                    throw new InvalidFormatException("Invalid datetime! /to cannot be before /from");
+                }
+
                 return tm.addEventTask(result[0], p, parsedFrom, parsedTo);
 
             } catch (InvalidFormatException e) {
